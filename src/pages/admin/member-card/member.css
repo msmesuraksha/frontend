@@ -1,0 +1,42 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.insideCard{
+    border-radius: 10px !important;
+    border: 0.1px solid rgb(219, 216, 216);
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);}
+.insideCard:hover,
+.insideCard:focus-within {
+  transform: scale(1.02);
+}
+.card-content {
+    --padding: 1.5rem;
+    padding: var(--padding);
+    background-color: #fdfdfd;
+    border-radius: 10px !important;
+
+
+   
+  }
+  .card-title {
+ 
+    font-size: 25px !important;
+  }
+.div-col{
+    padding: 15px 50px;
+}
+.price{
+    font-size: 20px;
+}
+.buttonYearly{
+   background:#542381 !important; 
+   color: #fafafa !important;
+}

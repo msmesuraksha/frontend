@@ -1,0 +1,220 @@
+import React, { useEffect, useState, useMemo } from "react";
+import PropTypes from "prop-types";
+import withRouter from "components/Common/withRouter";
+import { isEmpty } from "lodash";
+import * as moment from "moment";
+
+import {
+  Button,
+  Card,
+  CardBody,
+} from "reactstrap";
+import { getOrders as onGetOrders } from "store/actions";
+import { RegisteredCompanyData } from "../../../../common/data/registeredcompanyData";
+import { getcompanyList as ongetcompanyList } from "../../../../store/actions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Badge,
+  Col,
+  Container,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  Row,
+  Table,
+  UncontrolledDropdown,
+  UncontrolledTooltip,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  Input,
+  FormFeedback,
+  Label,
+} from "reactstrap";
+import {
+  CheckBox,
+  SrNo,
+  CompanyName,
+  GstNO,
+  Pancard,
+  Status,
+  PaymentMethod,
+  Amount,
+  DateFormat
+} from "./RegCompanyCol";
+
+import TableContainer from "../../../../components/Common/TableContainer";
+import RegCompanyViewModal from "./RegCompanyViewModal";
+import { Country, State, City } from 'country-state-city';
+
+import { Spinner } from "pages/admin/spinner/spinner";
+
+import { ExportFileComponent } from "pages/exportFile/exportFileComponent";
+
+import { SelectCompanyList } from "store/member-list/memberlist.selecter";
+
+const RegisteredCompanyList = props => {
+
+  const [modal1, setModal1] = useState(false);
+
+  const toggleViewModal = () => setModal1(!modal1);
+
+
+  const companyList = useSelector(SelectCompanyList)
+
+  const { loading } = useSelector(state => ({ loading: state.MemberList.loading })
+  );
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "SR.No",
+        accessor: "Srno",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <div>
+            {cellProps.data.length - cellProps.cell.row.index}
+          </div>;
+        },
+      },
+      {
+        Header: "Company Name",
+        accessor: "companyName",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <div>
+            {cellProps.cell.row.original.companyName}
+          </div>;;
+        },
+      },
+      {
+        Header: "Mobile No.",
+        accessor: "customerMobile",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <GstNO {...cellProps} />;
+        },
+      },
+      {
+        Header: "GST No.",
+        accessor: "gstin",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <GstNO {...cellProps} />;
+        },
+      },
+      {
+        Header: "Pan Card No.",
+        accessor: "companyPan",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <Pancard {...cellProps} />;
+        },
+      },
+      {
+        Header: " Due Amount",
+        accessor: "totalAmount",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <div className=" text-end">
+            <Amount {...cellProps} />
+          </div>
+
+
+        },
+      },
+      {
+        Header: "JOINED ON",
+        accessor: "joinedOn",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          //console.log("cellPropscellProps", cellProps)
+          return <div style={{ width: "90px" }}>{moment(cellProps.cell.row.original.joinedOn).format("DD-MM-YYYY")}</div>
+        },
+      },
+      {
+        Header: "city",
+        accessor: "city",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <div>
+            {cellProps.cell.row.original.city}
+          </div>;
+        },
+      },
+      {
+        Header: "State",
+        accessor: "state",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <div>
+            {cellProps.cell.row.original.state}
+          </div>;
+        },
+      },
+      {
+        Header: "Created By",
+        accessor: "createdRole",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <div>
+            {cellProps.cell.row.original.createdRole != undefined ? cellProps.cell.row.original.createdRole : ''}
+          </div>;
+        },
+      },
+
+
+    ],
+    []
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(ongetcompanyList());
+  }, []);
+
+  const adminRole = sessionStorage.getItem('adminRole')
+  return (
+    <React.Fragment>
+      <RegCompanyViewModal isOpen={modal1} toggle={toggleViewModal} />
+      {loading == false ? <Spinner /> : <Card>
+        <CardBody>
+          {/*           <Button type="button" color="primary" className="btn-sm btn-rounded float-left-button" onClick={toggleViewModal}>
+            <i className="mdi mdi-eye font-size-16 text-primary me-1" />
+            View Details
+          </Button> */}
+          <div className="mb-4 h4 card-title mt-5">Company List</div>
+          {adminRole == 'L3' && <ExportFileComponent url={'/api/admin/downloadAllCompaniesDateWise'} fileName={'AllCompanyList'} />}
+          <TableContainer
+            columns={columns}
+            // data={arr != undefined? arr : []}
+            data={companyList != undefined ? companyList : []}
+            isGlobalFilter={true}
+            isAddOptions={false}
+            customPageSize={20}
+          />
+        </CardBody>
+      </Card>}
+
+    </React.Fragment>
+  );
+};
+
+RegisteredCompanyList.propTypes = {
+  orders: PropTypes.array,
+  onGetOrders: PropTypes.func,
+};
+
+export default withRouter(RegisteredCompanyList);

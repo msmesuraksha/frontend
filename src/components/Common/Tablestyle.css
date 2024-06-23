@@ -1,0 +1,12 @@
+.tableBody{height: 400px !important;
+     overflow-y: scroll !important;
+     display:block;
+}
+.tableHeader{
+    position: sticky; top: 0; 
+    }
+
+    .tabless{
+        /* position: initial; */
+
+    }
