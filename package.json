@@ -18,6 +18,7 @@
     "axios": "^1.2.1",
     "axios-mock-adapter": "^1.21.2",
     "bootstrap": "^5.2.3",
+    "caniuse-lite": "^1.0.30001636",
     "chart.js": "^2.9.4",
     "chartist": "^0.11.4",
     "classnames": "^2.3.2",
@@ -94,7 +95,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build --max_old_space_size=8000 build",
+    "prebuild": "npx update-browserslist-db@latest",
+    "build": "node --max_old_space_size=8192 ./node_modules/react-scripts/bin/react-scripts.js build",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --write \"**/*.{js,jsx,json,md,html,css,less,scss}\"",
