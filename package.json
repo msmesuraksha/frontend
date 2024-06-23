@@ -110,7 +110,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build --max_old_space_size=8000 build",
+    "build": "node --max_old_space_size=4096 node_modules/.bin/react-scripts build",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --write \"**/*.{js,jsx,json,md,html,css,less,scss}\"",
