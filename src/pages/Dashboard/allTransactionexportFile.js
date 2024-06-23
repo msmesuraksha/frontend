@@ -20,7 +20,7 @@ const AllTransactionsExcel = ({ selectMonth, dateSelect }) => {
             const token = sessionStorage.getItem("tokenemployeeRegister");
             const config = {}
 
-            const response = await fetch('https://bafana-backend.azurewebsites.net/api/admin/downloadAllTransactions', {
+            const response = await fetch('https://msmesuraksha-backend.azurewebsites.net/api/admin/downloadAllTransactions', {
                 method: 'POST',
                 headers: {
                     ...config.headers,
