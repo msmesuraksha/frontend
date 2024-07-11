@@ -524,12 +524,9 @@ function LatesttransactionViewDetails(props) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {selected.pHArray.map((item) => {
-                                                if (item.requestor == 'CREDITOR') {
-                                                    if (item.disputeType == "DISPUTE_TYPE1") return
-                                                    if (item.disputeType == "DISPUTE_TYPE2") return
-                                                    if (item.disputeType == "DISPUTE_TYPE3") return
-                                                    return <tr key={item}>
+                                            {selected.pHArray.map((item, index) => {
+                                                if (item.requestor == 'CREDITOR' && item.disputeType == '') {
+                                                    return <tr key={item + index}>
                                                         <td>{(item.paymentDate)}</td>
                                                         {/* <td>Bank Deposit</td> */}
                                                         <td className="text-right">{numberFormat(item.amtPaid)}</td>
