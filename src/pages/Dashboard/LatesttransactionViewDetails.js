@@ -1117,9 +1117,9 @@ function LatesttransactionViewDetails(props) {
                                         <Col md={12}>
                                             <span className="text-capitalize"> {moment(item.timeStamp).format("DD/MM/YYYY")} -</span>
                                             <span className=""> {item.message}</span>
-                                            {index > 0 && item?.remarks != undefined && item.message != 'Payment recorded by Buyer' ? <span className="text-capitalize"> {`[Admin Remarks: ${item?.remarks}]`}</span> : ''}
-
-
+                                            {index > 0 && item?.remarks != undefined && item.message != 'Payment recorded by Buyer' && item.message != 'Payment recorded by Seller' ? <span className="text-capitalize"> {`[Admin Remarks: ${item?.remarks}]`}</span> : ''}
+                                            {item.message == 'Payment recorded by Buyer' && item.remarks != '' ? <span className="text-capitalize"> {`[Buyer Remarks: ${item?.remarks}]`}</span> : ''}
+                                            {item.message == 'Payment recorded by Seller' && item.remarks != '' ? <span className="text-capitalize"> {`[Seller Remarks: ${item?.remarks}]`}</span> : ''}
                                         </Col>
 
 
