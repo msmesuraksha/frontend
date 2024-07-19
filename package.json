@@ -80,6 +80,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
+    "install": "npm install --legacy-peer-deps",
     "start": "react-scripts start",
     "prebuild": "npx update-browserslist-db@latest",
     "build": "node --max_old_space_size=8192 ./node_modules/react-scripts/bin/react-scripts.js build",
