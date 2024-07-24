@@ -607,7 +607,7 @@ function LatesttransactionViewDetails(props) {
                                                         <tr key={index}>
                                                             {review?.question?.questionType === "RATING" && (
                                                                 <>
-                                                                    <td style={{ border: '1px solid #ddd', padding: '12px', color: '#74788d' }}>
+                                                                    <td className="text-capitalize" style={{ border: '1px solid #ddd', padding: '12px', color: '#74788d' }}>
                                                                         {review?.question?.questionDesc || ''}
                                                                     </td>
                                                                     <td style={{ border: '1px solid #ddd', padding: '12px', color: '#74788d' }}>
@@ -739,7 +739,7 @@ function LatesttransactionViewDetails(props) {
                                                         <tr key={index}>
                                                             {review?.question != null && review.question.questionType !== "RATING" && (
                                                                 <>
-                                                                    <td style={{ border: '1px solid #ddd', padding: '12px', verticalAlign: 'middle', textAlign: 'left', width: '80%' }}>{review.question.questionDesc || ''}</td>
+                                                                    <td style={{ border: '1px solid #ddd', padding: '12px', verticalAlign: 'middle', textAlign: 'left', width: '80%' }}>{OneFirstCapitalizeWords(review.question.questionDesc) || ''}</td>
                                                                     <td style={{ border: '1px solid #ddd', padding: '12px', verticalAlign: 'middle', textAlign: 'left', width: '20%' }}>{review.response}</td>
                                                                 </>
                                                             )}
@@ -1626,6 +1626,28 @@ const daysSinceRefe = (cellValue, referenceDate) => {
     }
     return '';
 };
+
+export const OneFirstCapitalizeWords = (str) => {
+    // Split the string into an array of words
+    let words = str.split(" ");
+
+    // Iterate over each word in the array
+
+    // Capitalize the first letter of each word and make the rest of the letters lowercase
+    for (let i = 0; i < words.length; i++) {
+        // Capitalize the first letter of each word and make the rest of the letters lowercase
+        if (i == 0) {
+            words[i] = words[0].charAt(0).toUpperCase() + words[0].substring(1);
+        }
+        if (i > 0) {
+            words[i] = words[i].toLowerCase()
+        }
+
+    }
+
+    // Join the words back into a single string and return it
+    return words.join(" ");
+}
 
 
 
