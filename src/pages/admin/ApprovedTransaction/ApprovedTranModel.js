@@ -73,10 +73,10 @@ const ApprovedTranctionModel = props => {
 
 
     useEffect(() => {
-        const logsPaymenid = selected != "" ? selected.pHArray[0].id : ''
+        const logsPaymenid = selected != "" ? selected.defaulterEntry?._id : ''
 
         dispatch(getAllLogs({
-            "paymentId": logsPaymenid
+            "defaulterEntryId": logsPaymenid
         }))
     }, [selected])
 
@@ -715,14 +715,15 @@ const ApprovedTranctionModel = props => {
                                     <h4>Logs</h4>
                                     <Card className="mb-3 shadow">
                                         <CardBody className="buyer-card-body" style={{ height: "300px", overflowY: "scroll" }}>
-                                            {getAllLogss != null && getAllLogss != undefined && getAllLogss?.logs != undefined ? getAllLogss.logs.map((item, index) => {
+                                            {getAllLogss != null && getAllLogss != undefined ? getAllLogss.map((item, index) => {
+
                                                 return <Row className="d-flex p-1 mt-1 " style={{ background: "#e6f7ff" }} key={item}>
                                                     <Col md={12}>
-                                                        <span className="text-capitalize"> {moment(item.timeStamp).format("DD/MM/YY")} -</span>
+                                                        <span className="text-capitalize"> {moment(item.timeStamp).format("DD/MM/YYYY")} -</span>
                                                         <span className=""> {item.message}</span>
-                                                        {index > 0 && item?.remarks != undefined ? <span className="text-capitalize"> {`[Admin Remarks: ${item?.remarks}]`}</span> : ''}
-
-
+                                                        {item?.remarks != undefined && item.message != 'Complaint disputed' && item.message != 'Payment recorded by Seller' ? <span className="text-capitalize"> {`[Admin Remarks: ${item?.remarks}]`}</span> : ''}
+                                                        {item.message == 'Complaint disputed' && item.remarks != '' ? <span className="text-capitalize"> {`[Buyer Remarks: ${item?.remarks}]`}</span> : ''}
+                                                        {item.message == 'Payment recorded by Seller' && item.remarks != '' ? <span className="text-capitalize"> {`[Seller Remarks: ${item?.remarks}]`}</span> : ''}
                                                     </Col>
 
 
