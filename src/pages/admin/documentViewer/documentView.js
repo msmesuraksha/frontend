@@ -17,7 +17,7 @@ import {
   Row, Col
 } from "reactstrap";
 
-
+import './documentView.css'
 
 export const DocumentViewModule = props => {
 
@@ -75,10 +75,10 @@ export const DocumentViewModule = props => {
       tabIndex="-1"
       toggle={toggle}
     >
-      <div className="modal-content">
+      <div className="modal-content custom-page ">
         <ModalHeader toggle={toggle}>Document View</ModalHeader>
         <ModalBody>
-          <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} prefetchMethod="GET" requestHeaders={headers} style={{ height: 800 }} />
+          <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} prefetchMethod="GET" requestHeaders={headers} />
         </ModalBody>
       </div>
     </Modal>

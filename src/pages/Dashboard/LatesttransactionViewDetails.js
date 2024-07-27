@@ -841,7 +841,7 @@ function LatesttransactionViewDetails(props) {
                                         return <>
                                             <div className="file-container">
                                                 <div className="file-header">
-                                                    <div><strong>Dispute Type : </strong><span style={{ display: 'flex' }}>SELLER HAS NOT GIVEN INPUT CREDIT FOR INVOICE RAISED</span></div>
+                                                    <div><strong>Dispute Type : </strong><span style={{ display: 'flex' }}>SELLER HAS NOT GIVEN GST INPUT CREDIT FOR INVOICE RAISED</span></div>
                                                     <span style={{ display: 'inline-block' }}>Documents Uploaded On :- {moment(file.debtorcacertificate?.createdAt).format("DD-MM-YYYY")}</span>
                                                 </div>
                                                 <div className="buyer-remarks"><strong>CA Attachments</strong></div>
