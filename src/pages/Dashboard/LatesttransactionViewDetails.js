@@ -1137,7 +1137,7 @@ function LatesttransactionViewDetails(props) {
 
                 </Row>
 
-                {SelectedTab != 'closeTicket' && <Row className="mt-4">
+                {SelectedTab != 'closeTicket' && selected.defaulterEntry.latestStatus != 'COMPLAINT_DELETED' && <Row className="mt-4">
                     <Row md="4" className="mt-3" ><h3>Action</h3></Row>
                     <Row className="mt-3 align-items-center d-flex" style={{ flexDirection: 'row', flexWrap: 'nowrap' }}>
                         <div className="d-flex" style={{ width: 'auto' }}>

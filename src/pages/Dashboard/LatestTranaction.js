@@ -258,15 +258,38 @@ const LatestTranaction = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
+
+          let currentImg1 = ''
+
+          for (const key in StatusAndOpinionObj) {
+            const currentUrlArr = cellProps.cell.row.original?.latestTanss?.pHArray[0]?.status;
+            if (currentUrlArr == undefined) break
+            if (key === currentUrlArr) {
+              currentImg1 = StatusAndOpinionObj[key];
+              break;
+            }
+          }
           return (
             <div className="d-flex">
-
-              {cellProps.cell.row.original != undefined && cellProps.cell.row.original.latestTanss.pHArray != undefined ? cellProps.cell.row.original.latestTanss.pHArray[0].status : ''}
+              {currentImg1}
 
               {/* {cellProps.cell.row.original.defaulterEntry != undefined ? cellProps.cell.row.original.defaulterEntry.status : ""} */}
             </div>
           );
-        },
+        },/* {
+          return (
+            <div className="d-flex">
+
+                {cellProps.cell.row.original != undefined && cellProps.cell.row.original.latestTanss.pHArray != undefined ? cellProps.cell.row.original.latestTanss.pHArray[0].status : ''}
+
+              {cellProps.cell.row.original != undefined ? cellProps.cell.row.original?.latestTanss?.defaulterEntry?.latestStatus : "'"}
+
+              
+
+              {cellProps.cell.row.original.defaulterEntry != undefined ? cellProps.cell.row.original.defaulterEntry.status : ""}
+            </div>
+          );
+        }, */
       },
       {
         Header: "Payment Status",
@@ -425,6 +448,7 @@ export const StatusAndOpinionObj = {
   FULLY_RESOLVED_PAYMENT_RECIEVED: 'COMPLAINT RESOLVED',
   PARTIALLY_RESOLVED_PARTIAL_PAYMENT_RECEIVED: 'PARTIAL PAYMENT RECEIVED',
   PAYMENT_PENDING_AGREEMENT_REACHED: 'PAYMENT PENDING - AGREEMENT REACHED',
+  COMPLAINT_DELETED: 'COMPLAINT DELETED',
 }
 
 LatestTranaction.propTypes = {

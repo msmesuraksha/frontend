@@ -59,7 +59,7 @@ export const StatusAndOpinionModule = props => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchAllOtherStatusStart({
-            "status": ['APPROVED', 'COMPLAINT_APPROVED', 'BuyerMayBeaDefaulter', 'fraudulentComplaintSeller', 'Complaintsfiledwithoutevidence', 'FULLY_RESOLVED_PAYMENT_RECIEVED', 'PARTIALLY_RESOLVED_PARTIAL_PAYMENT_RECEIVED', 'PAYMENT_PENDING_AGREEMENT_REACHED'],
+            "status": ['APPROVED', 'COMPLAINT_APPROVED', 'BuyerMayBeaDefaulter', 'fraudulentComplaintSeller', 'Complaintsfiledwithoutevidence', 'FULLY_RESOLVED_PAYMENT_RECIEVED', 'PARTIALLY_RESOLVED_PARTIAL_PAYMENT_RECEIVED', 'PAYMENT_PENDING_AGREEMENT_REACHED', 'COMPLAINT_DELETED'],
             "roleBasedFilter": true
         }))
     }, [])
