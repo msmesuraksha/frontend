@@ -32,6 +32,7 @@ export const selectLatestTansMap = createSelector(
         }
       }
 
+
       if (CREDITOR > 0 && DEBTOR == 0) {
         return false
       } else {
