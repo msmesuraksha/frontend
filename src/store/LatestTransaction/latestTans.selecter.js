@@ -17,6 +17,45 @@ export const selectLatestTansMap = createSelector(
       const complaintNumber = item?.defaulterEntry?.complaintNumber != undefined ? item.defaulterEntry?.complaintNumber : ''
       const latestTanss = item
       return { buyerName, sellerName, latestTanss, complaintNumber };
+    }).filter((value) => {
+
+      const pHArray = value.latestTanss.pHArray
+      let CREDITOR = 0
+      let DEBTOR = 0
+
+      for (let i = 0; i < pHArray.length; i++) {
+        if (pHArray[i].requestor == "CREDITOR") {
+          CREDITOR++
+        }
+        if (pHArray[i].requestor == "DEBTOR") {
+          DEBTOR++
+        }
+      }
+
+      if (CREDITOR > 0 && DEBTOR == 0) {
+        return false
+      } else {
+        return true
+      }
+
+
+      /* 
+      
+         if (value.latestTanss.pHArray.length == 1) {
+       if (value.latestTanss.pHArray[0].requestor == "CREDITOR") {
+         return false
+       }
+
+       if (value.latestTanss.pHArray[0].requestor == "DEBTOR") {
+         return true
+       }
+
+     } else if (value.latestTanss.pHArray.length > 1) {
+       return true
+     }
+      
+      */
+
     }).reverse()
   }
 
