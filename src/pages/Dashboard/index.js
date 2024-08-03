@@ -68,18 +68,18 @@ const Dashboard = props => {
   }, [])
 
   const reports = [
-    { title: "Total Members", iconClass: "bx-group", description: `${totalMemebers}` },
-    { title: "Amount Due", iconClass: "bx bx-money", description: numberFormat(amoundDue) },
+    { title: "Total Members", iconClass: "bx-group", description: `${totalMemebers != undefined ? totalMemebers : 0}` },
+    { title: "Amount Due", iconClass: "bx bx-money", description: numberFormat(amoundDue == undefined || amoundDue == NaN ? 0 : amoundDue) },
     {
       "title": "Amount Recovered",
       "iconClass": "bx bx-check",
-      "description": numberFormat(amoundRecovered)
+      "description": numberFormat(amoundRecovered == undefined || amoundRecovered == NaN ? 0 : amoundRecovered)
 
     },
     {
       "title": "Total Reviews",
       "iconClass": "bx bx-star",
-      "description": `${totalReviews}`
+      "description": `${totalReviews == undefined || totalReviews == NaN ? 0 : totalReviews}`
     }
     // {
     //   title: "Total Reviews",
