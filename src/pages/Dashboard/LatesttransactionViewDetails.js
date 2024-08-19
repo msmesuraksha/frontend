@@ -378,7 +378,7 @@ function LatesttransactionViewDetails(props) {
     const getAllLogss = useSelector(getlogsSelector)
 
 
-    const logsPaymenid = selected.defaulterEntry?._id
+    const logsPaymenid = selected.defaulterEntry?.id
 
     useEffect(() => {
         dispatch(getAllLogs({

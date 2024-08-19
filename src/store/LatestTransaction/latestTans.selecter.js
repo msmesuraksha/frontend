@@ -17,7 +17,9 @@ export const selectLatestTansMap = createSelector(
       const complaintNumber = item?.defaulterEntry?.complaintNumber != undefined ? item.defaulterEntry?.complaintNumber : ''
       const latestTanss = item
       return { buyerName, sellerName, latestTanss, complaintNumber };
-    }).filter((value) => {
+    }).reverse()
+
+    /* filter((value) => {
 
       const pHArray = value.latestTanss.pHArray
       let CREDITOR = 0
@@ -40,24 +42,7 @@ export const selectLatestTansMap = createSelector(
       }
 
 
-      /* 
-      
-         if (value.latestTanss.pHArray.length == 1) {
-       if (value.latestTanss.pHArray[0].requestor == "CREDITOR") {
-         return false
-       }
-
-       if (value.latestTanss.pHArray[0].requestor == "DEBTOR") {
-         return true
-       }
-
-     } else if (value.latestTanss.pHArray.length > 1) {
-       return true
-     }
-      
-      */
-
-    }).reverse()
+    }) */
   }
 
 );
