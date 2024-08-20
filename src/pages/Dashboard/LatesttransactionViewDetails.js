@@ -295,7 +295,8 @@ function LatesttransactionViewDetails(props) {
 
             dispatch(esclateTransaction({
                 "payments": newPaymentArray,
-                "remarks": remarks
+                "remarks": remarks,
+                "defaulterEntryId": selected.defaulterEntry.id,
             }))
             toast.success("Complaint escalate to next level")
         } else {
