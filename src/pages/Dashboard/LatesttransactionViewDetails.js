@@ -303,7 +303,7 @@ function LatesttransactionViewDetails(props) {
                 "status": selectedOption.value,
                 "payments": newPaymentArray,
                 "remarks": remarks,
-                "defaulterEntryId": selected.defaulterEntry._id,
+                "defaulterEntryId": selected.defaulterEntry.id,
 
             }
             dispatch(approveRejectLatestTrans(payload))
