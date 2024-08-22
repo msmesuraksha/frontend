@@ -826,60 +826,55 @@ function LatesttransactionViewDetails(props) {
                                 <h4 className="mt-4">Reason For Dispute</h4>
 
                                 <div className="file-list">
-                                    <div className="file-container">
-                                        {selected.pHArray.map((file, index) => {
+                                    {selected.pHArray.map((file, index) => {
+                                        if (file.requestor == 'DEBTOR') {
                                             if (file.disputeType !== '') return null; // Skip non-Record Payment files
                                             return <FileDisplayDebtor key={index} file={file} documentView={documentView} requestor={'DEBTOR'} numberFormat={numberFormat} />;
-                                        })}
-                                    </div>
-                                    <div className="file-container">
-                                        {selected.pHArray.map((file, index) => {
-                                            if (file.disputeType !== '') return null; // Skip non-Record Payment files
-                                            return (
-                                                <div key={index}>
-                                                    {
-                                                        file?.debtorcacertificate != '' && file?.debtorcacertificate != null && (
-                                                            <>
-                                                                <div className="file-header">
-                                                                    <div><strong>Additional Document</strong></div>
-                                                                    {file.debtorcacertificate.createdAt && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(file.debtorcacertificate.createdAt).format("DD-MM-YYYY")}</span>}
-                                                                </div>
-                                                                <CAAttchment file={file} documentView={documentView}></CAAttchment>
-                                                            </>
+                                        }
+                                    })}
 
+                                    {selected.pHArray.length > 0 && selected.pHArray.some(file => file?.debtorcacertificate != '' && file?.debtorcacertificate != null) && (
+                                        <div className="file-container">
+                                            {selected.pHArray.map((file, index) => {
+                                                if (file.disputeType !== '' || file?.debtorcacertificate == null || file?.debtorcacertificate.length === 0) return  // Skip non-Record Payment files or null debtorcacertificate
+                                                return (
+                                                    <div key={index}>
+                                                        <div className="file-header">
+                                                            <div><strong>Additional Document</strong></div>
+                                                            {file.debtorcacertificate.createdAt && (
+                                                                <span style={{ display: 'inline-block' }}>
+                                                                    Documents Uploaded On: {moment(file.debtorcacertificate.createdAt).format("DD-MM-YYYY")}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        <CAAttchment file={file} documentView={documentView} />
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
 
-                                                        )
+                                    {selected.pHArray.length > 0 && selected.pHArray.some(file => file?.debtoradditionaldocuments != null && file?.debtoradditionaldocuments.length > 0) && (
+                                        <div className="file-container">
+                                            {selected.pHArray.map((file, index) => {
+                                                if (file.disputeType !== '' || file?.debtoradditionaldocuments == null || file?.debtoradditionaldocuments.length === 0) return null; // Skip non-Record Payment files or invalid debtoradditionaldocuments
+                                                return (
+                                                    <div key={index}>
+                                                        <div className="file-header">
+                                                            <div><strong>Additional Document</strong></div>
+                                                            {file.debtoradditionaldocuments[0]?.createdAt && (
+                                                                <span style={{ display: 'inline-block' }}>
+                                                                    Documents Uploaded On: {moment(file.debtoradditionaldocuments[0].createdAt).format("DD-MM-YYYY")}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        <OtherDocuments file={file} documentView={documentView} />
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
 
-                                                    }
-                                                </div>
-                                            )
-
-                                        })}
-                                    </div>
-                                    <div className="file-container">
-                                        {selected.pHArray.map((file, index) => {
-                                            if (file.disputeType !== '') return null; // Skip non-Record Payment files
-                                            return (
-                                                <div key={index}>
-                                                    {
-                                                        file?.debtoradditionaldocuments != '' && file?.debtoradditionaldocuments != null && (
-                                                            <>
-                                                                <div className="file-header">
-                                                                    <div><strong>Additional Document</strong> </div>
-                                                                    {file.debtoradditionaldocuments[0] && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(file.debtoradditionaldocuments[0].createdAt).format("DD-MM-YYYY")}</span>}
-                                                                </div>
-                                                                <OtherDocuments file={file} documentView={documentView}></OtherDocuments>
-                                                            </>
-
-
-                                                        )
-
-                                                    }
-                                                </div>
-                                            )
-
-                                        })}
-                                    </div>
                                 </div>
 
                                 <div className="file-list">
@@ -1464,55 +1459,50 @@ export const FileDisplay = ({ file, documentView, requestor, numberFormat }) => 
 export const FileDisplayDebtor = ({ file, documentView, requestor, numberFormat }) => {
 
     return (
-        <>
-            {
-                file.requestor != 'CREDITOR' && <div>
-                    <div className="file-header">
-                        <div><strong>Dispute Type:</strong> PAYMENT RECORDED</div>
-                        {file.attachments?.[0] && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(file.attachments?.[0]?.createdAt).format("DD-MM-YYYY")}</span>}
-                    </div>
-                    <div className="d-flex align-items-center justify-content-start file-header" style={{ gap: "5px" }}>
-                        <strong>Amount:</strong>
-                        <p className="mb-0">{numberFormat(file.amtPaid)}</p>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-start" style={{ gap: "5px" }}>
-                        <strong>{file.requestor == 'CREDITOR' ? "Seller Remarks :" : "Buyer Remarks :"}</strong>
-                        <p className="mb-0">{file.debtorRemarks}</p>
-                    </div>
-                    {file.attachments.length > 0 && <div className="buyer-remarks"><strong>Attachments</strong></div>}
+        <div className="file-container">
+            <div>
+                <div className="file-header">
+                    <div><strong>Dispute Type:</strong> PAYMENT RECORDED</div>
+                    {file.attachments?.[0] && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(file.attachments?.[0]?.createdAt).format("DD-MM-YYYY")}</span>}
                 </div>
-            }
+                <div className="d-flex align-items-center justify-content-start file-header" style={{ gap: "5px" }}>
+                    <strong>Amount:</strong>
+                    <p className="mb-0">{numberFormat(file.amtPaid)}</p>
+                </div>
+                <div className="d-flex align-items-center justify-content-start" style={{ gap: "5px" }}>
+                    <strong>{file.requestor == 'CREDITOR' ? "Seller Remarks :" : "Buyer Remarks :"}</strong>
+                    <p className="mb-0">{file.debtorRemarks}</p>
+                </div>
+                {file.attachments.length > 0 && <div className="buyer-remarks"><strong>Attachments</strong></div>}
+            </div>
+            <div className="attachments-container">
+                {file.attachments?.map((value, i) => {
 
-            {
-                file.requestor == 'DEBTOR' && <div className="attachments-container">
-                    {file.attachments?.map((value, i) => {
+                    let currentImg1 = ''
 
-                        let currentImg1 = ''
-
-                        for (const key in ImageIcons) {
-                            const currentUrlArr = value.name?.split('.');
-                            if (currentUrlArr == undefined) break
-                            if (key === currentUrlArr[currentUrlArr?.length - 1]) {
-                                currentImg1 = ImageIcons[key];
-                                break;
-                            }
+                    for (const key in ImageIcons) {
+                        const currentUrlArr = value.name?.split('.');
+                        if (currentUrlArr == undefined) break
+                        if (key === currentUrlArr[currentUrlArr?.length - 1]) {
+                            currentImg1 = ImageIcons[key];
+                            break;
                         }
+                    }
 
-                        return (
-                            <Card key={i} className="attachment-card">
-                                <CardBody className="attachment-card-body">
-                                    <div className="attachment-icon">
-                                        <img src={currentImg1} className="iconsImage shadow" style={{ cursor: 'pointer' }} onClick={() => documentView(value)} />
-                                        <span className="attachment-name">{value.name}</span>
-                                    </div>
-                                </CardBody>
-                            </Card>
-                        )
-                    })}
-                </div>
-            }
+                    return (
+                        <Card key={i} className="attachment-card">
+                            <CardBody className="attachment-card-body">
+                                <div className="attachment-icon">
+                                    <img src={currentImg1} className="iconsImage shadow" style={{ cursor: 'pointer' }} onClick={() => documentView(value)} />
+                                    <span className="attachment-name">{value.name}</span>
+                                </div>
+                            </CardBody>
+                        </Card>
+                    )
+                })}
+            </div>
 
-        </>
+        </div>
 
 
 
