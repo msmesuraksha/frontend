@@ -553,7 +553,7 @@ function LatesttransactionViewDetails(props) {
                                     {selected.pHArray.map((file, index) => {
                                         if (file.requestor == 'CREDITOR') {
                                             if (file.disputeType !== '') return null; // Skip non-Record Payment files
-                                            return <FileDisplay key={index} file={file} documentView={documentView} requestor={"CREDITOR"} />;
+                                            return <FileDisplay key={index} file={file} documentView={documentView} requestor={"CREDITOR"} numberFormat={numberFormat} />;
                                         }
                                     })}
                                 </div>
@@ -591,6 +591,120 @@ function LatesttransactionViewDetails(props) {
                                     <h4>Total Due Amount : {numberFormat(selected.defaulterEntry?.totalAmount)}</h4>
                                 </Row>
 
+                                {selected.pHArray[0].creditoradditionaldocuments.length > 0 && <Row className="mt-4">
+
+
+                                    {selected.pHArray.map((file, index) => (
+                                        <div key={index}>
+                                            {file?.creditoradditionaldocuments.length > 0 && file.creditoradditionaldocuments.map((value, i) => {
+
+                                                let currentImg1 = ''
+
+                                                for (const key in ImageIcons) {
+                                                    const currentUrlArr = value.name?.split('.');
+                                                    if (currentUrlArr == undefined) break
+                                                    if (key === currentUrlArr[currentUrlArr?.length - 1]) {
+                                                        currentImg1 = ImageIcons[key];
+                                                        break;
+                                                    }
+                                                }
+                                                return (
+                                                    <Col key={i}>
+                                                        <div className="file-container">
+                                                            <div className="file-header">
+                                                                <div><strong>Additional Document</strong> </div>
+                                                                {file.creditoradditionaldocuments[0] && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(file.creditoradditionaldocuments[0].createdAt).format("DD-MM-YYYY")}</span>}
+                                                            </div>
+                                                            <div className="file-header">
+                                                                <div><strong>Other Documents Attachments</strong> </div>
+                                                            </div>
+                                                            <Card className="mb-2">
+
+                                                                <CardBody className="attachment-card-body" style={{ height: "80px" }}>
+                                                                    <div className="attachment-icon d-flex">
+                                                                        {/* <a href={value.url} rel='noreferrer' target='_blank'>
+                                    
+                                    <i className="far fa-file-pdf fa-2x text-danger"></i>
+                                </a> */}
+                                                                        <img src={currentImg1} className="iconsImage shadow" style={{ cursor: 'pointer' }} onClick={() => documentView(value)} />&nbsp;
+                                                                        <span style={{
+                                                                            display: "block",/* or inline-block */
+                                                                            textOverflow: "ellipsis",
+                                                                            wordWrap: "break-word",
+                                                                            overflow: "hidden",
+                                                                            maxHeight: "3.9em",
+                                                                            lineHeight: "1.8em"
+                                                                        }}>{value.name}</span>
+                                                                    </div>
+
+                                                                </CardBody>
+                                                            </Card>
+                                                        </div>
+                                                    </Col>
+
+                                                )
+                                            })
+
+                                            }
+                                        </div>
+
+
+
+                                    ))}
+                                </Row>}
+                                {selected.pHArray[0].creditorcacertificate != null && selected.pHArray[0].creditorcacertificate != '' && <Row className="mt-4">
+                                    {selected.pHArray.map((file, index) => {
+
+
+                                        let currentImg1 = ''
+
+                                        for (const key in ImageIcons) {
+                                            const currentUrlArr = file?.creditorcacertificate?.name?.split('.');
+                                            if (currentUrlArr == undefined) break
+                                            if (key === currentUrlArr[currentUrlArr?.length - 1]) {
+                                                currentImg1 = ImageIcons[key];
+                                                break;
+                                            }
+                                        }
+
+                                        return <div key={index}>
+                                            {file?.creditorcacertificate != '' && file?.creditorcacertificate != null &&
+                                                <Col md="12">
+                                                    <div className="file-container">
+                                                        <div className="file-header">
+                                                            <div><strong>Additional Document</strong> </div>
+                                                            {file.creditorcacertificate.createdAt[0] && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(file.creditorcacertificate.createdAt).format("DD-MM-YYYY")}</span>}
+                                                        </div>
+                                                        <div className="file-header">
+                                                            <div><strong>CA Certificate Attachments</strong> </div>
+                                                        </div>
+                                                        <Card className="mb-2">
+
+                                                            <CardBody className="attachment-card-body" style={{ height: "80px" }}>
+                                                                <div className="attachment-icon d-flex">
+                                                                    <img src={currentImg1} className="iconsImage shadow" style={{ cursor: 'pointer' }} onClick={() => documentView(file?.creditorcacertificate)} />&nbsp;
+                                                                    <span style={{
+                                                                        display: "block",/* or inline-block */
+                                                                        textOverflow: "ellipsis",
+                                                                        wordWrap: "break-word",
+                                                                        overflow: "hidden",
+                                                                        maxHeight: "3.9em",
+                                                                        lineHeight: "1.8em"
+                                                                    }}>{file?.creditorcacertificate?.name}</span>
+                                                                </div>
+
+                                                            </CardBody>
+                                                        </Card>
+                                                    </div>
+                                                </Col>
+
+
+                                            }
+                                        </div>
+                                    }
+                                    )}
+                                </Row>}
+
                                 <Row>
                                     <h4 className="mt-2">Seller Rating</h4>
                                     <div className="existing-reviews flex-wrap align-items-center">
@@ -626,102 +740,6 @@ function LatesttransactionViewDetails(props) {
 
 
                                 </Row>
-                                {selected.pHArray[0].creditoradditionaldocuments.length > 0 && <Row className="mt-4">
-                                    <strong> Other Documents</strong>
-
-                                    {selected.pHArray.map((file, index) => (
-                                        <div key={index}>
-                                            {file?.creditoradditionaldocuments.length > 0 && file.creditoradditionaldocuments.map((value, i) => {
-
-                                                let currentImg1 = ''
-
-                                                for (const key in ImageIcons) {
-                                                    const currentUrlArr = value.name?.split('.');
-                                                    if (currentUrlArr == undefined) break
-                                                    if (key === currentUrlArr[currentUrlArr?.length - 1]) {
-                                                        currentImg1 = ImageIcons[key];
-                                                        break;
-                                                    }
-                                                }
-                                                return (
-                                                    <Col md="6" key={i}>
-                                                        <Card className="mb-2">
-
-                                                            <CardBody className="attachment-card-body" style={{ background: 'rgba(0, 0, 0, 0.05)', height: "80px" }}>
-                                                                <div className="attachment-icon d-flex">
-                                                                    {/* <a href={value.url} rel='noreferrer' target='_blank'>
-                                                                        
-                                                                        <i className="far fa-file-pdf fa-2x text-danger"></i>
-                                                                    </a> */}
-                                                                    <img src={currentImg1} className="iconsImage shadow" style={{ cursor: 'pointer' }} onClick={() => documentView(value)} />&nbsp;
-                                                                    <span style={{
-                                                                        display: "block",/* or inline-block */
-                                                                        textOverflow: "ellipsis",
-                                                                        wordWrap: "break-word",
-                                                                        overflow: "hidden",
-                                                                        maxHeight: "3.9em",
-                                                                        lineHeight: "1.8em"
-                                                                    }}>{value.name}</span>
-                                                                </div>
-
-                                                            </CardBody>
-                                                        </Card>
-                                                    </Col>
-                                                )
-                                            })
-
-                                            }
-                                        </div>
-
-
-
-                                    ))}
-                                </Row>}
-                                {selected.pHArray[0].creditorcacertificate != null && selected.pHArray[0].creditorcacertificate != '' && <Row className="mt-4">
-                                    <strong> CA Certificate</strong>
-
-                                    {selected.pHArray.map((file, index) => {
-
-
-                                        let currentImg1 = ''
-
-                                        for (const key in ImageIcons) {
-                                            const currentUrlArr = file?.creditorcacertificate?.name?.split('.');
-                                            if (currentUrlArr == undefined) break
-                                            if (key === currentUrlArr[currentUrlArr?.length - 1]) {
-                                                currentImg1 = ImageIcons[key];
-                                                break;
-                                            }
-                                        }
-
-                                        return <div key={index}>
-                                            {file?.creditorcacertificate != '' && file?.creditorcacertificate != null &&
-                                                <Col md="6">
-                                                    <Card className="mb-2">
-
-                                                        <CardBody className="attachment-card-body" style={{ background: 'rgba(0, 0, 0, 0.05)', height: "80px" }}>
-                                                            <div className="attachment-icon d-flex">
-                                                                <img src={currentImg1} className="iconsImage shadow" style={{ cursor: 'pointer' }} onClick={() => documentView(file?.creditorcacertificate)} />&nbsp;
-                                                                <span style={{
-                                                                    display: "block",/* or inline-block */
-                                                                    textOverflow: "ellipsis",
-                                                                    wordWrap: "break-word",
-                                                                    overflow: "hidden",
-                                                                    maxHeight: "3.9em",
-                                                                    lineHeight: "1.8em"
-                                                                }}>{file?.creditorcacertificate?.name}</span>
-                                                            </div>
-
-                                                        </CardBody>
-                                                    </Card>
-                                                </Col>
-
-
-                                            }
-                                        </div>
-                                    }
-                                    )}
-                                </Row>}
 
                                 <Row>
                                     <h4 className="mt-4">Feedback Question</h4>
@@ -811,23 +829,57 @@ function LatesttransactionViewDetails(props) {
                                     <div className="file-container">
                                         {selected.pHArray.map((file, index) => {
                                             if (file.disputeType !== '') return null; // Skip non-Record Payment files
-                                            return <FileDisplayDebtor key={index} file={file} documentView={documentView} requestor={'DEBTOR'} />;
+                                            return <FileDisplayDebtor key={index} file={file} documentView={documentView} requestor={'DEBTOR'} numberFormat={numberFormat} />;
                                         })}
+                                    </div>
+                                    <div className="file-container">
                                         {selected.pHArray.map((file, index) => {
                                             if (file.disputeType !== '') return null; // Skip non-Record Payment files
                                             return (
                                                 <div key={index}>
                                                     {
-                                                        file?.debtorcacertificate != '' && file?.debtorcacertificate != null &&
-                                                        <CAAttchment file={file} documentView={documentView} />
+                                                        file?.debtorcacertificate != '' && file?.debtorcacertificate != null && (
+                                                            <>
+                                                                <div className="file-header">
+                                                                    <div><strong>Additional Document</strong></div>
+                                                                    {file.debtorcacertificate.createdAt && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(file.debtorcacertificate.createdAt).format("DD-MM-YYYY")}</span>}
+                                                                </div>
+                                                                <CAAttchment file={file} documentView={documentView}></CAAttchment>
+                                                            </>
+
+
+                                                        )
+
                                                     }
-                                                    {file.debtoradditionaldocuments.length > 0 && < OtherDocuments file={file} documentView={documentView} />}
                                                 </div>
                                             )
 
                                         })}
                                     </div>
+                                    <div className="file-container">
+                                        {selected.pHArray.map((file, index) => {
+                                            if (file.disputeType !== '') return null; // Skip non-Record Payment files
+                                            return (
+                                                <div key={index}>
+                                                    {
+                                                        file?.debtoradditionaldocuments != '' && file?.debtoradditionaldocuments != null && (
+                                                            <>
+                                                                <div className="file-header">
+                                                                    <div><strong>Additional Document</strong> </div>
+                                                                    {file.debtoradditionaldocuments[0] && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(file.debtoradditionaldocuments[0].createdAt).format("DD-MM-YYYY")}</span>}
+                                                                </div>
+                                                                <OtherDocuments file={file} documentView={documentView}></OtherDocuments>
+                                                            </>
 
+
+                                                        )
+
+                                                    }
+                                                </div>
+                                            )
+
+                                        })}
+                                    </div>
                                 </div>
 
                                 <div className="file-list">
@@ -857,7 +909,7 @@ function LatesttransactionViewDetails(props) {
                                                     <div><strong>Dispute Type : </strong><span style={{ display: 'flex' }}>SELLER HAS NOT GIVEN GST INPUT CREDIT FOR INVOICE RAISED</span></div>
                                                     <span style={{ display: 'inline-block' }}>Documents Uploaded On :- {moment(file.debtorcacertificate?.createdAt).format("DD-MM-YYYY")}</span>
                                                 </div>
-                                                <div className="buyer-remarks"><strong>CA Attachments</strong></div>
+                                                <div className="buyer-remarks"><strong>CA Certificate Attachments</strong></div>
                                                 <div className="attachments-container">
                                                     {file?.debtorcacertificate != '' && file?.debtorcacertificate != null &&
                                                         <Col md="6">
@@ -1119,7 +1171,6 @@ function LatesttransactionViewDetails(props) {
 
 
                 <Row>
-
                     <Col md="12" className="mt-4">
                         <h4>Logs</h4>
                         <Card className="mb-3 shadow">
@@ -1361,7 +1412,7 @@ function LatesttransactionViewDetails(props) {
     )
 }
 
-export const FileDisplay = ({ file, documentView, requestor }) => {
+export const FileDisplay = ({ file, documentView, requestor, numberFormat }) => {
 
     return (
         <div className="file-container">
@@ -1369,11 +1420,15 @@ export const FileDisplay = ({ file, documentView, requestor }) => {
                 <div><strong>Dispute Type:</strong> PAYMENT RECORDED</div>
                 {file.attachments?.[0] && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(file.attachments?.[0]?.createdAt).format("DD-MM-YYYY")}</span>}
             </div>
-            <div className="">
-                <strong>{file.requestor == 'CREDITOR' ? "Seller Remarks :" : "Buyer Remarks :"}</strong>
-                <p>{file.debtorRemarks}</p>
+            <div className="d-flex align-items-center justify-content-start file-header" style={{ gap: "5px" }}>
+                <strong>Amount:</strong>
+                <p className="mb-0">{numberFormat(file.amtPaid)}</p>
             </div>
-            <div className="buyer-remarks"><strong>Attachments</strong></div>
+            <div className="d-flex align-items-center justify-content-start" style={{ gap: "5px" }}>
+                <strong>{file.requestor == 'CREDITOR' ? "Seller Remarks :" : "Buyer Remarks :"}</strong>
+                <p className="mb-0">{file.debtorRemarks}</p>
+            </div>
+            {file.attachments.length > 0 && <div className="buyer-remarks"><strong>Attachments</strong></div>}
             <div className="attachments-container">
                 {file.attachments?.map((value, i) => {
 
@@ -1406,7 +1461,7 @@ export const FileDisplay = ({ file, documentView, requestor }) => {
 };
 
 
-export const FileDisplayDebtor = ({ file, documentView, requestor }) => {
+export const FileDisplayDebtor = ({ file, documentView, requestor, numberFormat }) => {
 
     return (
         <>
@@ -1416,11 +1471,15 @@ export const FileDisplayDebtor = ({ file, documentView, requestor }) => {
                         <div><strong>Dispute Type:</strong> PAYMENT RECORDED</div>
                         {file.attachments?.[0] && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(file.attachments?.[0]?.createdAt).format("DD-MM-YYYY")}</span>}
                     </div>
-                    <div className="">
-                        <strong>{file.requestor == 'CREDITOR' ? "Seller Remarks :" : "Buyer Remarks :"}</strong>
-                        <p>{file.debtorRemarks}</p>
+                    <div className="d-flex align-items-center justify-content-start file-header" style={{ gap: "5px" }}>
+                        <strong>Amount:</strong>
+                        <p className="mb-0">{numberFormat(file.amtPaid)}</p>
                     </div>
-                    <div className="buyer-remarks"><strong>Attachments</strong></div>
+                    <div className="d-flex align-items-center justify-content-start" style={{ gap: "5px" }}>
+                        <strong>{file.requestor == 'CREDITOR' ? "Seller Remarks :" : "Buyer Remarks :"}</strong>
+                        <p className="mb-0">{file.debtorRemarks}</p>
+                    </div>
+                    {file.attachments.length > 0 && <div className="buyer-remarks"><strong>Attachments</strong></div>}
                 </div>
             }
 
@@ -1599,7 +1658,7 @@ export const CAAttchment = ({ file, documentView }) => {
     }
 
     return (<>
-        <div className="buyer-remarks"><strong>CA Attachments</strong></div>
+        <div className="buyer-remarks"><strong>CA Certificate Attachments</strong></div>
         <div className="attachments-container">
             <Col md="6">
                 <Card className="mb-2">
