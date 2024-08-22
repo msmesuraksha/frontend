@@ -553,9 +553,8 @@ function LatesttransactionViewDetails(props) {
                                     {selected.pHArray.map((file, index) => {
                                         if (file.requestor == 'CREDITOR') {
                                             if (file.disputeType !== '') return null; // Skip non-Record Payment files
-                                            return <FileDisplay key={index} file={file} documentView={documentView} />;
+                                            return <FileDisplay key={index} file={file} documentView={documentView} requestor={"CREDITOR"} />;
                                         }
-
                                     })}
                                 </div>
                                 <h4 className="mt-4">Invoice Details</h4>
@@ -809,13 +808,26 @@ function LatesttransactionViewDetails(props) {
                                 <h4 className="mt-4">Reason For Dispute</h4>
 
                                 <div className="file-list">
-                                    {selected.pHArray.map((file, index) => {
-                                        if (file.requestor == 'DEBTOR') {
+                                    <div className="file-container">
+                                        {selected.pHArray.map((file, index) => {
                                             if (file.disputeType !== '') return null; // Skip non-Record Payment files
-                                            return <FileDisplay key={index} file={file} documentView={documentView} />;
-                                        }
+                                            return <FileDisplayDebtor key={index} file={file} documentView={documentView} requestor={'DEBTOR'} />;
+                                        })}
+                                        {selected.pHArray.map((file, index) => {
+                                            if (file.disputeType !== '') return null; // Skip non-Record Payment files
+                                            return (
+                                                <div key={index}>
+                                                    {
+                                                        file?.debtorcacertificate != '' && file?.debtorcacertificate != null &&
+                                                        <CAAttchment file={file} documentView={documentView} />
+                                                    }
+                                                    {file.debtoradditionaldocuments.length > 0 && < OtherDocuments file={file} documentView={documentView} />}
+                                                </div>
+                                            )
 
-                                    })}
+                                        })}
+                                    </div>
+
                                 </div>
 
                                 <div className="file-list">
@@ -1349,9 +1361,7 @@ function LatesttransactionViewDetails(props) {
     )
 }
 
-export const FileDisplay = ({ file, documentView }) => {
-
-
+export const FileDisplay = ({ file, documentView, requestor }) => {
 
     return (
         <div className="file-container">
@@ -1360,7 +1370,7 @@ export const FileDisplay = ({ file, documentView }) => {
                 {file.attachments?.[0] && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(file.attachments?.[0]?.createdAt).format("DD-MM-YYYY")}</span>}
             </div>
             <div className="">
-                <strong>Buyer Remarks</strong>
+                <strong>{file.requestor == 'CREDITOR' ? "Seller Remarks :" : "Buyer Remarks :"}</strong>
                 <p>{file.debtorRemarks}</p>
             </div>
             <div className="buyer-remarks"><strong>Attachments</strong></div>
@@ -1390,14 +1400,70 @@ export const FileDisplay = ({ file, documentView }) => {
                     )
                 })}
             </div>
-            {file?.debtorcacertificate != '' && file?.debtorcacertificate != null &&
-                <CAAttchment file={file} documentView={documentView} />
-            }
-            {file.debtoradditionaldocuments.length > 0 && < OtherDocuments file={file} documentView={documentView} />}
-
         </div>
+
     );
 };
+
+
+export const FileDisplayDebtor = ({ file, documentView, requestor }) => {
+
+    return (
+        <>
+            {
+                file.requestor != 'CREDITOR' && <div>
+                    <div className="file-header">
+                        <div><strong>Dispute Type:</strong> PAYMENT RECORDED</div>
+                        {file.attachments?.[0] && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(file.attachments?.[0]?.createdAt).format("DD-MM-YYYY")}</span>}
+                    </div>
+                    <div className="">
+                        <strong>{file.requestor == 'CREDITOR' ? "Seller Remarks :" : "Buyer Remarks :"}</strong>
+                        <p>{file.debtorRemarks}</p>
+                    </div>
+                    <div className="buyer-remarks"><strong>Attachments</strong></div>
+                </div>
+            }
+
+            {
+                file.requestor == 'DEBTOR' && <div className="attachments-container">
+                    {file.attachments?.map((value, i) => {
+
+                        let currentImg1 = ''
+
+                        for (const key in ImageIcons) {
+                            const currentUrlArr = value.name?.split('.');
+                            if (currentUrlArr == undefined) break
+                            if (key === currentUrlArr[currentUrlArr?.length - 1]) {
+                                currentImg1 = ImageIcons[key];
+                                break;
+                            }
+                        }
+
+                        return (
+                            <Card key={i} className="attachment-card">
+                                <CardBody className="attachment-card-body">
+                                    <div className="attachment-icon">
+                                        <img src={currentImg1} className="iconsImage shadow" style={{ cursor: 'pointer' }} onClick={() => documentView(value)} />
+                                        <span className="attachment-name">{value.name}</span>
+                                    </div>
+                                </CardBody>
+                            </Card>
+                        )
+                    })}
+                </div>
+            }
+
+        </>
+
+
+
+
+
+
+    );
+};
+
+
 export const FileDisplayTwo = ({ file, numberFormat, documentView }) => {
     return (
         <div className="file-container">
