@@ -187,7 +187,7 @@ const SidebarContent = props => {
               </Link>
             </li>
             <li>
-              <Link to="/#" className="has-arrow">
+              <Link to="" className={props.isHovered ? "has-arrow" : ""}>
                 <i className="bx bx-home-circle"></i>
                 <span>{props.isHovered && props.t("Members")}</span>
               </Link>
@@ -934,7 +934,7 @@ const SidebarContent = props => {
               </Link>
             </li>
             <li>
-              <Link to="/#" className={props.isHovered ? "has-arrow" : ""}>
+              <Link to="" className={props.isHovered ? "has-arrow" : ""}>
                 <i className="bx bx-home-circle"></i>
                 <span>{props.isHovered && props.t("Members")}</span>
               </Link>
@@ -1026,7 +1026,7 @@ const SidebarContent = props => {
               </Link>
             </li>
             <li>
-              <Link to="/#" className="has-arrow">
+              <Link to="" className={props.isHovered ? "has-arrow" : ""}>
                 <i className="bx bx-home-circle"></i>
                 <span>{props.isHovered && props.t("Members")}</span>
               </Link>
