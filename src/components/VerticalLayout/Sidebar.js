@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import withRouter from "components/Common/withRouter";
 
@@ -17,15 +17,25 @@ import logoDark from "../../assets/images/logo-dark.png";
 
 const Sidebar = props => {
 
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   return (
     <React.Fragment>
-      <div className="vertical-menu">
-        <div className="navbar-brand-box">
-         
-      
-        </div>
+      <div
+        className="vertical-menu"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         <div data-simplebar className="h-100">
-          {props.type !== "condensed" ? <SidebarContent /> : <SidebarContent />}
+          {props.type !== "condensed" ? <SidebarContent isHovered={isHovered} /> : <SidebarContent isHovered={isHovered} />}
         </div>
         <div className="sidebar-background"></div>
       </div>

@@ -35,7 +35,7 @@ class Knob extends React.Component {
   }
 
   static defaultProps = {
-    onChangeEnd: () => {},
+    onChangeEnd: () => { },
     min: 0,
     max: 100,
     step: 1,
@@ -110,9 +110,9 @@ class Knob extends React.Component {
     let endAngle
     const angle = !this.props.log
       ? ((v - this.props.min) * this.angleArc) /
-        (this.props.max - this.props.min)
+      (this.props.max - this.props.min)
       : Math.log(Math.pow(v / this.props.min, this.angleArc)) /
-        Math.log(this.props.max / this.props.min)
+      Math.log(this.props.max / this.props.min)
     if (!this.props.clockwise) {
       startAngle = this.endAngle + 0.00001
       endAngle = startAngle - angle - 0.00001
@@ -145,12 +145,12 @@ class Knob extends React.Component {
     let val = !this.props.log
       ? ~~((v < 0 ? -0.5 : 0.5) + v / this.props.step) * this.props.step
       : Math.pow(
-          this.props.step,
-          ~~(
-            (Math.abs(v) < 1 ? -0.5 : 0.5) +
-            Math.log(v) / Math.log(this.props.step)
-          )
+        this.props.step,
+        ~~(
+          (Math.abs(v) < 1 ? -0.5 : 0.5) +
+          Math.log(v) / Math.log(this.props.step)
         )
+      )
     val = Math.max(Math.min(val, this.props.max), this.props.min)
     if (isNaN(val)) {
       val = 0
@@ -174,7 +174,7 @@ class Knob extends React.Component {
     const val = !this.props.log
       ? (a * (this.props.max - this.props.min)) / this.angleArc + this.props.min
       : Math.pow(this.props.max / this.props.min, a / this.angleArc) *
-        this.props.min
+      this.props.min
     return this.coerceToStep(val)
   }
 
@@ -285,9 +285,8 @@ class Knob extends React.Component {
     marginLeft: `-${((this.w * 3) / 4 + 2) >> 0}px`,
     border: 0,
     background: "none",
-    font: `${this.props.fontWeight} ${(this.w / this.digits) >> 0}px ${
-      this.props.font
-    }`,
+    font: `${this.props.fontWeight} ${(this.w / this.digits) >> 0}px ${this.props.font
+      }`,
     textAlign: "center",
     color: this.props.inputColor || this.props.fgColor,
     padding: "0px",
