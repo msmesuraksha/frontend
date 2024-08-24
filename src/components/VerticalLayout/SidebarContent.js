@@ -192,8 +192,7 @@ const SidebarContent = props => {
                 <span>{props.isHovered && props.t("Members")}</span>
               </Link>
 
-
-              <ul className="sub-menu">
+              {props.isHovered && <ul className="sub-menu">
 
                 <li>
                   <Link to="/members-list">
@@ -217,7 +216,8 @@ const SidebarContent = props => {
                     {props.isHovered && props.t("Company")}
                   </Link>
                 </li>
-              </ul>
+              </ul>}
+
             </li>
             <li>
               <Link to="/subscription" >
@@ -1031,8 +1031,7 @@ const SidebarContent = props => {
                 <span>{props.isHovered && props.t("Members")}</span>
               </Link>
 
-
-              <ul className="sub-menu">
+              {props.isHovered && <ul className="sub-menu">
 
                 <li>
                   <Link to="/members-list">
@@ -1056,7 +1055,8 @@ const SidebarContent = props => {
                     {props.isHovered && props.t("Company")}
                   </Link>
                 </li>
-              </ul>
+              </ul>}
+
             </li>
             {/*   <li>
               <Link to="/disputed-billings" >
