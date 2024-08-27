@@ -334,6 +334,7 @@ function LatesttransactionViewDetails(props) {
         })
 
         const payload = {
+            "defaulterEntryId": selected?.defaulterEntry?.id,
             "payments": newPaymentArray,
 
             "documentsRequiredFromCreditor": itemsSeller,
