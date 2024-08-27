@@ -220,7 +220,7 @@ export const ReopnTask = props => {
                     return (
                         <div className="d-flex">
 
-                            <strong className="" style={{ color: "#ff471a" }}>{cellProps.cell.row.original?.reopenTans != undefined && cellProps.cell.row.original?.reopenTans?.pHArray != undefined ? cellProps.cell.row.original.reopenTans?.pHArray[0]?.status == "RE_OPENED" ? "RE-OPENED" : "" : ''}
+                            <strong className="" style={{ color: "#ff471a" }}>{cellProps.cell.row.original?.reopenTans != undefined && cellProps.cell.row.original?.reopenTans?.pHArray != undefined ? cellProps.cell.row.original.reopenTans?.defaulterEntry?.latestStatus == "RE_OPENED" ? "RE-OPENED" : "" : ''}
                             </strong>
                             {/* {cellProps.cell.row.original.defaulterEntry != undefined ? cellProps.cell.row.original.defaulterEntry.status : ""} */}
                         </div>

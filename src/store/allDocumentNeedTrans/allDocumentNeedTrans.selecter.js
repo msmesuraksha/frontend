@@ -37,8 +37,8 @@ export const selectCloseTicketMap = createSelector(
       const allDocumentNeed = item
       return { buyerName, sellerName, allDocumentNeed, complaintNumber };
     }).filter((item) => {
-      const condition1 = item.allDocumentNeed.pHArray[0]?.status !== "DOCUMENTS_NEEDED";
-      const condition2 = item.allDocumentNeed.pHArray[0]?.status !== "APPROVED";
+      const condition1 = item.allDocumentNeed.defaulterEntry?.latestStatus !== "DOCUMENTS_NEEDED";
+      const condition2 = item.allDocumentNeed.defaulterEntry?.latestStatus !== "APPROVED";
       return condition1 && condition2;
     })
   }

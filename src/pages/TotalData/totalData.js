@@ -218,7 +218,7 @@ export const TotalData = props => {
                     let currentStatus = ''
 
                     for (const key in StatusAndOpinionObj) {
-                        const currentUrlArr = cellProps.cell.row.original?.totalTrans?.pHArray[0]?.status;
+                        const currentUrlArr = cellProps.cell.row.original?.totalTrans?.defaulterEntry?.latestStatus;
                         if (currentUrlArr == undefined) break
                         if (key === currentUrlArr) {
                             currentStatus = StatusAndOpinionObj[key];

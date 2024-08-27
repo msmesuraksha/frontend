@@ -412,12 +412,12 @@ function LatesttransactionViewDetails(props) {
                                     <div className="row">
                                         <div className="col-md-6">
                                             <h5>
-                                                Reference No. : <span className="text-primary">{selected != "" && selected.defaulterEntry != undefined ? "BAF" + "-" + selected.defaulterEntry.debtor._id.slice(-6).toUpperCase() + '-' + selected.defaulterEntry.invoices?.[0]?._id.slice(-6).toUpperCase() : ''}</span>
+                                                Complaint No. : <span className="text-primary">{selected != "" && selected.defaulterEntry != undefined ? selected?.defaulterEntry?.complaintNumber : ''}</span>
                                             </h5>
                                         </div>
                                         <div className="col-md-6">
                                             <h5 className="">
-                                                Defaulter Entry created At: <span className="text-primary">{selected != "" && selected.defaulterEntry != undefined ? moment(selected.pHArray[0].createdAt).format("DD-MM-YYYY") : ''}</span>
+                                                Defaulter Entry created At: <span className="text-primary">{selected != "" && selected.defaulterEntry != undefined ? moment(selected.defaulterEntry.createdAt).format("DD-MM-YYYY") : ''}</span>
                                             </h5>
                                         </div>
                                     </div>
@@ -591,12 +591,12 @@ function LatesttransactionViewDetails(props) {
                                     <h4>Total Due Amount : {numberFormat(selected.defaulterEntry?.totalAmount)}</h4>
                                 </Row>
 
-                                {selected.pHArray[0].creditoradditionaldocuments.length > 0 && <Row className="mt-4">
+                                {selected.pHArray[0]?.creditoradditionaldocuments?.length > 0 && <Row className="mt-4">
 
 
                                     {selected.pHArray.map((file, index) => (
                                         <div key={index}>
-                                            {file?.creditoradditionaldocuments.length > 0 && file.creditoradditionaldocuments.map((value, i) => {
+                                            {file?.creditoradditionaldocuments?.length > 0 && file.creditoradditionaldocuments?.map((value, i) => {
 
                                                 let currentImg1 = ''
 
@@ -652,7 +652,7 @@ function LatesttransactionViewDetails(props) {
 
                                     ))}
                                 </Row>}
-                                {selected.pHArray[0].creditorcacertificate != null && selected.pHArray[0].creditorcacertificate != '' && <Row className="mt-4">
+                                {selected.pHArray[0]?.creditorcacertificate != null && selected.pHArray[0]?.creditorcacertificate != '' && <Row className="mt-4">
                                     {selected.pHArray.map((file, index) => {
 
 
@@ -1132,7 +1132,7 @@ function LatesttransactionViewDetails(props) {
 
 
                 {
-                    selected.pHArray[0].reopenReason != undefined && selected.pHArray[0].reopenReason != "" ? <Row>
+                    selected.pHArray[0]?.reopenReason != undefined && selected.pHArray[0]?.reopenReason != "" ? <Row>
 
                         <Col md="12" className="mt-4">
                             <h4>Reason For Reopen Ticket</h4>
@@ -1142,8 +1142,8 @@ function LatesttransactionViewDetails(props) {
 
 
                                     <p className="mb-2 text-capitalize">
-                                        <strong className=" ">{selected.pHArray[0].requestor == "DEBTOR" ? selected?.defaulterEntry?.debtor?.companyName : selected?.defaulterEntry?.creditor?.companyName}:</strong> &nbsp;
-                                        <span className="">{selected.pHArray[0].reopenReason}</span>
+                                        <strong className=" ">{selected.pHArray[0]?.requestor == "DEBTOR" ? selected?.defaulterEntry?.debtor?.companyName : selected?.defaulterEntry?.creditor?.companyName}:</strong> &nbsp;
+                                        <span className="">{selected.pHArray[0]?.reopenReason}</span>
                                     </p>
 
                                 </CardBody>

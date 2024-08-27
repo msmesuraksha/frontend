@@ -180,7 +180,7 @@ const ApprovedTranction = props => {
           let currentStatus = ''
 
           for (const key in StatusAndOpinionObj) {
-            const currentUrlArr = cellProps.cell.row.original?.latestTanss?.pHArray[0]?.status;
+            const currentUrlArr = cellProps.cell.row.original?.latestTanss?.defaulterEntry?.latestStatus;
             if (currentUrlArr == undefined) break
             if (key === currentUrlArr) {
               currentStatus = StatusAndOpinionObj[key];
@@ -189,7 +189,7 @@ const ApprovedTranction = props => {
           }
           return (
             <div className="d-flex">
-              <strong style={{ color: cellProps.cell.row.original != undefined && cellProps.cell.row.original.latestTanss.pHArray != undefined ? cellProps.cell.row.original.latestTanss.pHArray[0].status == "COMPLAINT_APPROVED" ? "#5cd65c" : "" : "" }}>
+              <strong style={{ color: cellProps.cell.row.original != undefined && cellProps.cell.row.original.latestTanss.pHArray != undefined ? cellProps.cell.row.original.latestTanss.defaulterEntry?.latestStatus == "COMPLAINT_APPROVED" ? "#5cd65c" : "" : "" }}>
                 {currentStatus}
               </strong>
             </div>

@@ -991,6 +991,7 @@ const SidebarContent = props => {
           </ul>
         </div>
       </SimpleBar>}
+
       {adminRole == "L2" && <SimpleBar className="h-100" ref={ref}>
         <div id="sidebar-menu">
           <ul className="metismenu list-unstyled" id="side-menu">

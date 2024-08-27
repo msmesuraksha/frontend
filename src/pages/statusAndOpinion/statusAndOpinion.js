@@ -290,7 +290,7 @@ export const StatusAndOpinionModule = props => {
                     let currentStatus = ''
 
                     for (const key in StatusAndOpinionObj) {
-                        const currentUrlArr = cellProps.cell.row.original?.allDocumentNeed?.pHArray[0]?.status
+                        const currentUrlArr = cellProps.cell.row.original?.allDocumentNeed?.defaulterEntry?.latestStatus
                         if (currentUrlArr == undefined) break
                         if (key === currentUrlArr) {
                             currentStatus = StatusAndOpinionObj[key];

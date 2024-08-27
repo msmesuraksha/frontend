@@ -123,12 +123,12 @@ const ApprovedTranctionModel = props => {
                                                 <div className="row">
                                                     <div className="col-md-6">
                                                         <h5>
-                                                            Reference No. : <span className="text-primary">{selected != "" && selected.defaulterEntry != undefined ? "BAF" + "-" + selected.defaulterEntry.debtor._id.slice(-6).toUpperCase() + '-' + selected.defaulterEntry.invoices?.[0]?._id.slice(-6).toUpperCase() : ''}</span>
+                                                            Complaint No. : <span className="text-primary">{selected != "" && selected.defaulterEntry != undefined ? selected?.defaulterEntry?.complaintNumber : ''}</span>
                                                         </h5>
                                                     </div>
                                                     <div className="col-md-4">
                                                         <h5 className="text-right">
-                                                            Defaulter Entry created At: <span className="text-primary">{selected != "" && selected.defaulterEntry != undefined ? moment(selected.pHArray[0].createdAt).format("DD-MM-YYYY") : ''}</span>
+                                                            Defaulter Entry created At: <span className="text-primary">{selected != "" && selected.defaulterEntry != undefined ? moment(selected.defaulterEntry.createdAt).format("DD-MM-YYYY") : ''}</span>
                                                         </h5>
                                                     </div>
                                                 </div>
@@ -285,7 +285,7 @@ const ApprovedTranctionModel = props => {
 
 
                                             </Row>
-                                            {selected.pHArray[0].creditoradditionaldocuments.length > 0 && <Row className="mt-4">
+                                            {selected.pHArray[0]?.creditoradditionaldocuments.length > 0 && <Row className="mt-4">
                                                 <strong> Other Documents</strong>
 
                                                 {selected.pHArray.map((file, index) => (
@@ -336,7 +336,7 @@ const ApprovedTranctionModel = props => {
 
                                                 ))}
                                             </Row>}
-                                            {selected.pHArray[0].creditorcacertificate != null && selected.pHArray[0].creditorcacertificate != '' && <Row className="mt-4">
+                                            {selected.pHArray[0]?.creditorcacertificate != null && selected.pHArray[0]?.creditorcacertificate != '' && <Row className="mt-4">
                                                 <strong> CA Certificate</strong>
 
                                                 {selected.pHArray.map((file, index) => {

@@ -286,7 +286,7 @@ export const AllDocumentNeed = props => {
                     let currentImg1 = ''
 
                     for (const key in StatusAndOpinionObj) {
-                        const currentUrlArr = cellProps.cell.row.original?.allDocumentNeed?.pHArray[0]?.status;
+                        const currentUrlArr = cellProps.cell.row.original?.allDocumentNeed?.defaulterEntry?.latestStatus;
                         if (currentUrlArr == undefined) break
                         if (key === currentUrlArr) {
                             currentImg1 = StatusAndOpinionObj[key];

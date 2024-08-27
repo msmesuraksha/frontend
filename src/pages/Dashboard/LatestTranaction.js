@@ -262,7 +262,7 @@ const LatestTranaction = props => {
           let currentImg1 = ''
 
           for (const key in StatusAndOpinionObj) {
-            const currentUrlArr = cellProps.cell.row.original?.latestTanss?.pHArray[0]?.status;
+            const currentUrlArr = cellProps.cell.row.original?.latestTanss?.defaulterEntry?.latestStatus;
             if (currentUrlArr == undefined) break
             if (key === currentUrlArr) {
               currentImg1 = StatusAndOpinionObj[key];
@@ -280,7 +280,7 @@ const LatestTranaction = props => {
           return (
             <div className="d-flex">
 
-                {cellProps.cell.row.original != undefined && cellProps.cell.row.original.latestTanss.pHArray != undefined ? cellProps.cell.row.original.latestTanss.pHArray[0].status : ''}
+                {cellProps.cell.row.original != undefined && cellProps.cell.row.original.latestTanss.pHArray != undefined ? cellProps.cell.row.original.latestTanss.defaulterEntry?.latestStatus: ''}
 
               {cellProps.cell.row.original != undefined ? cellProps.cell.row.original?.latestTanss?.defaulterEntry?.latestStatus : "'"}
 
@@ -442,6 +442,7 @@ export const StatusAndOpinionObj = {
   RE_OPENED: 'RE-OPENED',
   Requesttoadditionaldocumnet: 'AWAITING ADDITIONAL DOCUMENTATION',
   DOCUMENTS_NEEDED: 'AWAITING ADDITIONAL DOCUMENTATION',
+  DOCUMENTS_NOT_UPLOADED: 'DOCUMENTS NOT UPLOADED',
   BuyerMayBeaDefaulter: 'BUYER MAY BE A DEFAULTER',
   fraudulentComplaintSeller: 'FRAUDULENT COMPLAINT LODGED BY SELLER',
   Complaintsfiledwithoutevidence: 'COMPLAINTS FILED WITHOUT SUFFICIENT EVIDENCE',
