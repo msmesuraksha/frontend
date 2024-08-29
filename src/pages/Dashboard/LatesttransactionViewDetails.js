@@ -400,6 +400,24 @@ function LatesttransactionViewDetails(props) {
         toggleDocumentView()
     }
 
+    const documentImgReturn = (imgtype) => {
+        let documentImg = ''
+
+        for (const key in ImageIcons) {
+            const currentUrlArr = imgtype?.name?.split('.');
+            if (currentUrlArr == undefined) break
+            if (key === currentUrlArr[currentUrlArr?.length - 1]) {
+                documentImg = ImageIcons[key];
+                break;
+            }
+        }
+
+        return documentImg
+
+    }
+
+
+
     return (
         <>
             {documentViewOpen && <DocumentViewModule isOpen={documentViewOpen} toggle={toggleDocumentView} currentUrl={currentUrl} />}
@@ -592,98 +610,39 @@ function LatesttransactionViewDetails(props) {
                                     <h4>Total Due Amount : {numberFormat(selected.defaulterEntry?.totalAmount)}</h4>
                                 </Row>
 
-                                {selected.pHArray[0]?.creditoradditionaldocuments?.length > 0 && <Row className="mt-4">
+                                {selected.defaulterEntry?.creditoradditionaldocuments?.length > 0 && <Row className="mt-4">
+                                    <div >
+                                        {selected.defaulterEntry?.creditoradditionaldocuments?.length > 0 && selected.defaulterEntry?.creditoradditionaldocuments?.map((value, i) => {
 
+                                            let currentImg1 = ''
 
-                                    {selected.pHArray.map((file, index) => (
-                                        <div key={index}>
-                                            {file?.creditoradditionaldocuments?.length > 0 && file.creditoradditionaldocuments?.map((value, i) => {
-
-                                                let currentImg1 = ''
-
-                                                for (const key in ImageIcons) {
-                                                    const currentUrlArr = value.name?.split('.');
-                                                    if (currentUrlArr == undefined) break
-                                                    if (key === currentUrlArr[currentUrlArr?.length - 1]) {
-                                                        currentImg1 = ImageIcons[key];
-                                                        break;
-                                                    }
+                                            for (const key in ImageIcons) {
+                                                const currentUrlArr = value.name?.split('.');
+                                                if (currentUrlArr == undefined) break
+                                                if (key === currentUrlArr[currentUrlArr?.length - 1]) {
+                                                    currentImg1 = ImageIcons[key];
+                                                    break;
                                                 }
-                                                return (
-                                                    <Col key={i}>
-                                                        <div className="file-container">
-                                                            <div className="file-header">
-                                                                <div><strong>Additional Document</strong> </div>
-                                                                {file.creditoradditionaldocuments[0] && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(file.creditoradditionaldocuments[0].createdAt).format("DD-MM-YYYY")}</span>}
-                                                            </div>
-                                                            <div className="file-header">
-                                                                <div><strong>Other Documents Attachments</strong> </div>
-                                                            </div>
-                                                            <Card className="mb-2">
-
-                                                                <CardBody className="attachment-card-body" style={{ height: "80px" }}>
-                                                                    <div className="attachment-icon d-flex">
-                                                                        {/* <a href={value.url} rel='noreferrer' target='_blank'>
-                                    
-                                    <i className="far fa-file-pdf fa-2x text-danger"></i>
-                                </a> */}
-                                                                        <img src={currentImg1} className="iconsImage shadow" style={{ cursor: 'pointer' }} onClick={() => documentView(value)} />&nbsp;
-                                                                        <span style={{
-                                                                            display: "block",/* or inline-block */
-                                                                            textOverflow: "ellipsis",
-                                                                            wordWrap: "break-word",
-                                                                            overflow: "hidden",
-                                                                            maxHeight: "3.9em",
-                                                                            lineHeight: "1.8em"
-                                                                        }}>{value.name}</span>
-                                                                    </div>
-
-                                                                </CardBody>
-                                                            </Card>
-                                                        </div>
-                                                    </Col>
-
-                                                )
-                                            })
-
                                             }
-                                        </div>
-
-
-
-                                    ))}
-                                </Row>}
-                                {selected.pHArray[0]?.creditorcacertificate != null && selected.pHArray[0]?.creditorcacertificate != '' && <Row className="mt-4">
-                                    {selected.pHArray.map((file, index) => {
-
-
-                                        let currentImg1 = ''
-
-                                        for (const key in ImageIcons) {
-                                            const currentUrlArr = file?.creditorcacertificate?.name?.split('.');
-                                            if (currentUrlArr == undefined) break
-                                            if (key === currentUrlArr[currentUrlArr?.length - 1]) {
-                                                currentImg1 = ImageIcons[key];
-                                                break;
-                                            }
-                                        }
-
-                                        return <div key={index}>
-                                            {file?.creditorcacertificate != '' && file?.creditorcacertificate != null &&
-                                                <Col md="12">
+                                            return (
+                                                <Col key={i}>
                                                     <div className="file-container">
                                                         <div className="file-header">
                                                             <div><strong>Additional Document</strong> </div>
-                                                            {file.creditorcacertificate.createdAt[0] && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(file.creditorcacertificate.createdAt).format("DD-MM-YYYY")}</span>}
+                                                            {selected.defaulterEntry?.creditoradditionaldocuments[0] && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(selected.defaulterEntry?.creditoradditionaldocuments[0].createdAt).format("DD-MM-YYYY")}</span>}
                                                         </div>
                                                         <div className="file-header">
-                                                            <div><strong>CA Certificate Attachments</strong> </div>
+                                                            <div><strong>Other Documents Attachments</strong> </div>
                                                         </div>
                                                         <Card className="mb-2">
 
                                                             <CardBody className="attachment-card-body" style={{ height: "80px" }}>
                                                                 <div className="attachment-icon d-flex">
-                                                                    <img src={currentImg1} className="iconsImage shadow" style={{ cursor: 'pointer' }} onClick={() => documentView(file?.creditorcacertificate)} />&nbsp;
+                                                                    {/* <a href={value.url} rel='noreferrer' target='_blank'>
+                                    
+                                    <i className="far fa-file-pdf fa-2x text-danger"></i>
+                                </a> */}
+                                                                    <img src={currentImg1} className="iconsImage shadow" style={{ cursor: 'pointer' }} onClick={() => documentView(value)} />&nbsp;
                                                                     <span style={{
                                                                         display: "block",/* or inline-block */
                                                                         textOverflow: "ellipsis",
@@ -691,7 +650,7 @@ function LatesttransactionViewDetails(props) {
                                                                         overflow: "hidden",
                                                                         maxHeight: "3.9em",
                                                                         lineHeight: "1.8em"
-                                                                    }}>{file?.creditorcacertificate?.name}</span>
+                                                                    }}>{value.name}</span>
                                                                 </div>
 
                                                             </CardBody>
@@ -699,11 +658,47 @@ function LatesttransactionViewDetails(props) {
                                                     </div>
                                                 </Col>
 
+                                            )
+                                        })
 
-                                            }
-                                        </div>
-                                    }
-                                    )}
+                                        }
+                                    </div>
+                                </Row>}
+                                {selected.defaulterEntry?.creditorcacertificate != null && selected.defaulterEntry?.creditorcacertificate != '' && <Row className="mt-4">
+                                    <div>
+                                        {selected.defaulterEntry?.creditorcacertificate != '' && selected.defaulterEntry?.creditorcacertificate != null &&
+                                            <Col md="12">
+                                                <div className="file-container">
+                                                    <div className="file-header">
+                                                        <div><strong>Additional Document</strong> </div>
+                                                        {selected.defaulterEntry?.creditorcacertificate.createdAt[0] && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(selected.defaulterEntry?.creditorcacertificate.createdAt).format("DD-MM-YYYY")}</span>}
+                                                    </div>
+                                                    <div className="file-header">
+                                                        <div><strong>CA Certificate Attachments</strong> </div>
+                                                    </div>
+                                                    <Card className="mb-2">
+
+                                                        <CardBody className="attachment-card-body" style={{ height: "80px" }}>
+                                                            <div className="attachment-icon d-flex">
+                                                                <img src={documentImgReturn(selected.defaulterEntry?.creditorcacertificate)} className="iconsImage shadow" style={{ cursor: 'pointer' }} onClick={() => documentView(selected.defaulterEntry?.creditorcacertificate)} />&nbsp;
+                                                                <span style={{
+                                                                    display: "block",/* or inline-block */
+                                                                    textOverflow: "ellipsis",
+                                                                    wordWrap: "break-word",
+                                                                    overflow: "hidden",
+                                                                    maxHeight: "3.9em",
+                                                                    lineHeight: "1.8em"
+                                                                }}>{selected.defaulterEntry?.creditorcacertificate?.name}</span>
+                                                            </div>
+
+                                                        </CardBody>
+                                                    </Card>
+                                                </div>
+                                            </Col>
+
+
+                                        }
+                                    </div>
                                 </Row>}
 
                                 <Row>
@@ -834,45 +829,31 @@ function LatesttransactionViewDetails(props) {
                                         }
                                     })}
 
-                                    {selected.pHArray.length > 0 && selected.pHArray.some(file => file?.debtorcacertificate != '' && file?.debtorcacertificate != null) && (
+                                    {selected.defaulterEntry?.debtorcacertificate != '' && selected.defaulterEntry?.debtorcacertificate != null && (
                                         <div className="file-container">
-                                            {selected.pHArray.map((file, index) => {
-                                                if (file.disputeType !== '' || file?.debtorcacertificate == null || file?.debtorcacertificate.length === 0) return  // Skip non-Record Payment files or null debtorcacertificate
-                                                return (
-                                                    <div key={index}>
-                                                        <div className="file-header">
-                                                            <div><strong>Additional Document</strong></div>
-                                                            {file.debtorcacertificate.createdAt && (
-                                                                <span style={{ display: 'inline-block' }}>
-                                                                    Documents Uploaded On: {moment(file.debtorcacertificate.createdAt).format("DD-MM-YYYY")}
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                        <CAAttchment file={file} documentView={documentView} />
-                                                    </div>
-                                                );
-                                            })}
+                                            <div className="file-header">
+                                                <div><strong>Additional Document</strong></div>
+                                                {selected.defaulterEntry?.debtorcacertificate.createdAt && (
+                                                    <span style={{ display: 'inline-block' }}>
+                                                        Documents Uploaded On: {moment(selected.defaulterEntry?.debtorcacertificate.createdAt).format("DD-MM-YYYY")}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <CAAttchment file={selected.defaulterEntry} documentView={documentView} />
                                         </div>
                                     )}
 
-                                    {selected.pHArray.length > 0 && selected.pHArray.some(file => file?.debtoradditionaldocuments != null && file?.debtoradditionaldocuments.length > 0) && (
+                                    {selected.defaulterEntry?.debtoradditionaldocuments != null && selected.defaulterEntry?.debtoradditionaldocuments.length > 0 && (
                                         <div className="file-container">
-                                            {selected.pHArray.map((file, index) => {
-                                                if (file.disputeType !== '' || file?.debtoradditionaldocuments == null || file?.debtoradditionaldocuments.length === 0) return null; // Skip non-Record Payment files or invalid debtoradditionaldocuments
-                                                return (
-                                                    <div key={index}>
-                                                        <div className="file-header">
-                                                            <div><strong>Additional Document</strong></div>
-                                                            {file.debtoradditionaldocuments[0]?.createdAt && (
-                                                                <span style={{ display: 'inline-block' }}>
-                                                                    Documents Uploaded On: {moment(file.debtoradditionaldocuments[0].createdAt).format("DD-MM-YYYY")}
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                        <OtherDocuments file={file} documentView={documentView} />
-                                                    </div>
-                                                );
-                                            })}
+                                            <div className="file-header">
+                                                <div><strong>Additional Document</strong></div>
+                                                {selected.defaulterEntry?.debtoradditionaldocuments[0]?.createdAt && (
+                                                    <span style={{ display: 'inline-block' }}>
+                                                        Documents Uploaded On: {moment(selected.defaulterEntry?.debtoradditionaldocuments[0].createdAt).format("DD-MM-YYYY")}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <OtherDocuments file={selected.defaulterEntry} documentView={documentView} />
                                         </div>
                                     )}
 
