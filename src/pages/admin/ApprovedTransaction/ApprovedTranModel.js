@@ -21,12 +21,8 @@ import { getAllLogs } from "store/LatestTransaction/latestTrans.action"
 import { useSelector, useDispatch } from "react-redux"
 import { SellerDocViewModule } from "../../Dashboard/sellerDocViewModule";
 
-import { FileDisplay } from "pages/Dashboard/LatesttransactionViewDetails";
-import { FileDisplayTwo } from "pages/Dashboard/LatesttransactionViewDetails";
-import { CAAttchment } from "pages/Dashboard/LatesttransactionViewDetails";
-import { OtherDocuments } from "pages/Dashboard/LatesttransactionViewDetails";
+import { FileDisplay, FileDisplayTwo, FileDisplayDebtor, CAAttchment, OtherDocuments, ImageIcons } from "pages/Dashboard/LatesttransactionViewDetails";
 
-import { ImageIcons } from "pages/Dashboard/LatesttransactionViewDetails";
 import { DocumentViewModule } from "../documentViewer/documentView";
 
 import './folder.css';
@@ -94,6 +90,22 @@ const ApprovedTranctionModel = props => {
     const documentView = (value) => {
         setCurrentUrl(value)
         toggleDocumentView()
+    }
+
+    const documentImgReturn = (imgtype) => {
+        let documentImg = ''
+
+        for (const key in ImageIcons) {
+            const currentUrlArr = imgtype?.name?.split('.');
+            if (currentUrlArr == undefined) break
+            if (key === currentUrlArr[currentUrlArr?.length - 1]) {
+                documentImg = ImageIcons[key];
+                break;
+            }
+        }
+
+        return documentImg
+
     }
 
     return (
@@ -215,7 +227,59 @@ const ApprovedTranctionModel = props => {
                                     <h4>Seller Attachments</h4>
                                     <Card className="mb-3 shadow">
                                         <CardBody className="buyer-card-body">
+                                            <h4>Payment History</h4>
+                                            <div className="table-responsive" >
+                                                <Table className="table align-middle table-nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Date</th>
+                                                            {/* <th>Type</th> */}
+                                                            <th>Amount</th>
+                                                            <th>Payment Method</th>
+                                                            <th>Bank Name</th>
 
+                                                            <th>Account No.</th>
+                                                            <th>Cheque No.</th>
+                                                            <th>IFSC code</th>
+
+                                                            <th>Transaction ID</th>
+                                                            <th>Create on</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {selected.pHArray.map((item, index) => {
+                                                            if (item.requestor == 'CREDITOR' && item.disputeType == '') {
+                                                                return <tr key={item + index}>
+                                                                    <td>{(item.paymentDate)}</td>
+                                                                    {/* <td>Bank Deposit</td> */}
+                                                                    <td className="text-right">{numberFormat(item.amtPaid)}</td>
+                                                                    <td>{item.paymentMode}</td>
+                                                                    <td>{item.bankName}</td>
+
+                                                                    <td>{item.bankAccNumber}</td>
+                                                                    <td>{item.chequeNumber}</td>
+                                                                    <td>{item.ifsc}</td>
+
+                                                                    <td>{item.transactionId}</td>
+                                                                    <td>{moment(item.createdAt).format("DD-MM-YYYY")}</td>
+                                                                </tr>
+                                                            }
+
+                                                        })}
+
+                                                        {/* Add more rows as needed */}
+                                                    </tbody>
+                                                </Table>
+                                            </div>
+                                            <div className="file-list mt-4">
+                                                {selected.pHArray.map((file, index) => {
+                                                    if (file.requestor == 'CREDITOR') {
+                                                        if (file.disputeType !== '') return null; // Skip non-Record Payment files
+                                                        return <FileDisplay key={index} file={file} documentView={documentView} requestor={"CREDITOR"} numberFormat={numberFormat} />;
+                                                    }
+                                                })}
+                                            </div>
+                                            <h4 className="mt-4">Invoice Details</h4>
                                             <Row>
                                                 <div className="table-responsive">
                                                     <Table className="table align-middle table-nowrap">
@@ -249,9 +313,99 @@ const ApprovedTranctionModel = props => {
                                                 <h4>Total Due Amount : {numberFormat(selected.defaulterEntry?.totalAmount)}</h4>
                                             </Row>
 
-                                            <Row>
+                                            {selected.defaulterEntry?.creditoradditionaldocuments?.length > 0 && <Row className="mt-4">
+                                                <div >
+                                                    {selected.defaulterEntry?.creditoradditionaldocuments?.length > 0 && selected.defaulterEntry?.creditoradditionaldocuments?.map((value, i) => {
 
-                                                <h4 className="mt-4">Seller Rating</h4>
+                                                        let currentImg1 = ''
+
+                                                        for (const key in ImageIcons) {
+                                                            const currentUrlArr = value.name?.split('.');
+                                                            if (currentUrlArr == undefined) break
+                                                            if (key === currentUrlArr[currentUrlArr?.length - 1]) {
+                                                                currentImg1 = ImageIcons[key];
+                                                                break;
+                                                            }
+                                                        }
+                                                        return (
+                                                            <Col key={i}>
+                                                                <div className="file-container">
+                                                                    <div className="file-header">
+                                                                        <div><strong>Additional Document</strong> </div>
+                                                                        {selected.defaulterEntry?.creditoradditionaldocuments[0] && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(selected.defaulterEntry?.creditoradditionaldocuments[0].createdAt).format("DD-MM-YYYY")}</span>}
+                                                                    </div>
+                                                                    <div className="file-header">
+                                                                        <div><strong>Other Documents Attachments</strong> </div>
+                                                                    </div>
+                                                                    <Card className="mb-2">
+
+                                                                        <CardBody className="attachment-card-body" style={{ height: "80px" }}>
+                                                                            <div className="attachment-icon d-flex">
+                                                                                {/* <a href={value.url} rel='noreferrer' target='_blank'>
+                                    
+                                    <i className="far fa-file-pdf fa-2x text-danger"></i>
+                                </a> */}
+                                                                                <img src={currentImg1} className="iconsImage shadow" style={{ cursor: 'pointer' }} onClick={() => documentView(value)} />&nbsp;
+                                                                                <span style={{
+                                                                                    display: "block",/* or inline-block */
+                                                                                    textOverflow: "ellipsis",
+                                                                                    wordWrap: "break-word",
+                                                                                    overflow: "hidden",
+                                                                                    maxHeight: "3.9em",
+                                                                                    lineHeight: "1.8em"
+                                                                                }}>{value.name}</span>
+                                                                            </div>
+
+                                                                        </CardBody>
+                                                                    </Card>
+                                                                </div>
+                                                            </Col>
+
+                                                        )
+                                                    })
+
+                                                    }
+                                                </div>
+                                            </Row>}
+                                            {selected.defaulterEntry?.creditorcacertificate != null && selected.defaulterEntry?.creditorcacertificate != '' && <Row className="mt-4">
+                                                <div>
+                                                    {selected.defaulterEntry?.creditorcacertificate != '' && selected.defaulterEntry?.creditorcacertificate != null &&
+                                                        <Col md="12">
+                                                            <div className="file-container">
+                                                                <div className="file-header">
+                                                                    <div><strong>Additional Document</strong> </div>
+                                                                    {selected.defaulterEntry?.creditorcacertificate.createdAt[0] && <span style={{ display: 'inline-block' }}>Documents Uploaded On: {moment(selected.defaulterEntry?.creditorcacertificate.createdAt).format("DD-MM-YYYY")}</span>}
+                                                                </div>
+                                                                <div className="file-header">
+                                                                    <div><strong>CA Certificate Attachments</strong> </div>
+                                                                </div>
+                                                                <Card className="mb-2">
+
+                                                                    <CardBody className="attachment-card-body" style={{ height: "80px" }}>
+                                                                        <div className="attachment-icon d-flex">
+                                                                            <img src={documentImgReturn(selected.defaulterEntry?.creditorcacertificate)} className="iconsImage shadow" style={{ cursor: 'pointer' }} onClick={() => documentView(selected.defaulterEntry?.creditorcacertificate)} />&nbsp;
+                                                                            <span style={{
+                                                                                display: "block",/* or inline-block */
+                                                                                textOverflow: "ellipsis",
+                                                                                wordWrap: "break-word",
+                                                                                overflow: "hidden",
+                                                                                maxHeight: "3.9em",
+                                                                                lineHeight: "1.8em"
+                                                                            }}>{selected.defaulterEntry?.creditorcacertificate?.name}</span>
+                                                                        </div>
+
+                                                                    </CardBody>
+                                                                </Card>
+                                                            </div>
+                                                        </Col>
+
+
+                                                    }
+                                                </div>
+                                            </Row>}
+
+                                            <Row>
+                                                <h4 className="mt-2">Seller Rating</h4>
                                                 <div className="existing-reviews flex-wrap align-items-center">
                                                     <div style={{ overflowX: 'auto' }}>
                                                         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -266,7 +420,7 @@ const ApprovedTranctionModel = props => {
                                                                     <tr key={index}>
                                                                         {review?.question?.questionType === "RATING" && (
                                                                             <>
-                                                                                <td style={{ border: '1px solid #ddd', padding: '12px', color: '#74788d' }}>
+                                                                                <td className="text-capitalize" style={{ border: '1px solid #ddd', padding: '12px', color: '#74788d' }}>
                                                                                     {review?.question?.questionDesc || ''}
                                                                                 </td>
                                                                                 <td style={{ border: '1px solid #ddd', padding: '12px', color: '#74788d' }}>
@@ -285,102 +439,6 @@ const ApprovedTranctionModel = props => {
 
 
                                             </Row>
-                                            {selected.pHArray[0]?.creditoradditionaldocuments.length > 0 && <Row className="mt-4">
-                                                <strong> Other Documents</strong>
-
-                                                {selected.pHArray.map((file, index) => (
-                                                    <div key={index}>
-                                                        {file?.creditoradditionaldocuments.length > 0 && file.creditoradditionaldocuments.map((value, i) => {
-
-                                                            let currentImg1 = ''
-
-                                                            for (const key in ImageIcons) {
-                                                                const currentUrlArr = value.name?.split('.');
-                                                                if (currentUrlArr == undefined) break
-                                                                if (key === currentUrlArr[currentUrlArr?.length - 1]) {
-                                                                    currentImg1 = ImageIcons[key];
-                                                                    break;
-                                                                }
-                                                            }
-                                                            return (
-                                                                <Col md="6" key={i}>
-                                                                    <Card className="mb-2">
-
-                                                                        <CardBody className="attachment-card-body" style={{ background: 'rgba(0, 0, 0, 0.05)', height: "80px" }}>
-                                                                            <div className="attachment-icon d-flex">
-                                                                                {/* <a href={value.url} rel='noreferrer' target='_blank'>
-                                                                        
-                                                                        <i className="far fa-file-pdf fa-2x text-danger"></i>
-                                                                    </a> */}
-                                                                                <img src={currentImg1} className="iconsImage shadow" style={{ cursor: 'pointer' }} onClick={() => documentView(value)} />&nbsp;
-                                                                                <span style={{
-                                                                                    display: "block",/* or inline-block */
-                                                                                    textOverflow: "ellipsis",
-                                                                                    wordWrap: "break-word",
-                                                                                    overflow: "hidden",
-                                                                                    maxHeight: "3.9em",
-                                                                                    lineHeight: "1.8em"
-                                                                                }}>{value.name}</span>
-                                                                            </div>
-
-                                                                        </CardBody>
-                                                                    </Card>
-                                                                </Col>
-                                                            )
-                                                        })
-
-                                                        }
-                                                    </div>
-
-
-
-                                                ))}
-                                            </Row>}
-                                            {selected.pHArray[0]?.creditorcacertificate != null && selected.pHArray[0]?.creditorcacertificate != '' && <Row className="mt-4">
-                                                <strong> CA Certificate</strong>
-
-                                                {selected.pHArray.map((file, index) => {
-
-
-                                                    let currentImg1 = ''
-
-                                                    for (const key in ImageIcons) {
-                                                        const currentUrlArr = file?.creditorcacertificate?.name?.split('.');
-                                                        if (currentUrlArr == undefined) break
-                                                        if (key === currentUrlArr[currentUrlArr?.length - 1]) {
-                                                            currentImg1 = ImageIcons[key];
-                                                            break;
-                                                        }
-                                                    }
-
-                                                    return <div key={index}>
-                                                        {file?.creditorcacertificate != '' && file?.creditorcacertificate != null &&
-                                                            <Col md="6">
-                                                                <Card className="mb-2">
-
-                                                                    <CardBody className="attachment-card-body" style={{ background: 'rgba(0, 0, 0, 0.05)', height: "80px" }}>
-                                                                        <div className="attachment-icon d-flex">
-                                                                            <img src={currentImg1} className="iconsImage shadow" style={{ cursor: 'pointer' }} onClick={() => documentView(file?.creditorcacertificate)} />&nbsp;
-                                                                            <span style={{
-                                                                                display: "block",/* or inline-block */
-                                                                                textOverflow: "ellipsis",
-                                                                                wordWrap: "break-word",
-                                                                                overflow: "hidden",
-                                                                                maxHeight: "3.9em",
-                                                                                lineHeight: "1.8em"
-                                                                            }}>{file?.creditorcacertificate?.name}</span>
-                                                                        </div>
-
-                                                                    </CardBody>
-                                                                </Card>
-                                                            </Col>
-
-
-                                                        }
-                                                    </div>
-                                                }
-                                                )}
-                                            </Row>}
 
                                             <Row>
                                                 <h4 className="mt-4">Feedback Question</h4>
@@ -398,7 +456,7 @@ const ApprovedTranctionModel = props => {
                                                                     <tr key={index}>
                                                                         {review?.question != null && review.question.questionType !== "RATING" && (
                                                                             <>
-                                                                                <td style={{ border: '1px solid #ddd', padding: '12px', verticalAlign: 'middle', textAlign: 'left', width: '80%' }}>{review.question.questionDesc || ''}</td>
+                                                                                <td style={{ border: '1px solid #ddd', padding: '12px', verticalAlign: 'middle', textAlign: 'left', width: '80%' }}>{OneFirstCapitalizeWords(review.question.questionDesc) || ''}</td>
                                                                                 <td style={{ border: '1px solid #ddd', padding: '12px', verticalAlign: 'middle', textAlign: 'left', width: '20%' }}>{review.response}</td>
                                                                             </>
                                                                         )}
@@ -417,8 +475,8 @@ const ApprovedTranctionModel = props => {
                                     <Card className="mb-3 mt-1" >
 
                                         <CardBody>
+                                            <h4>Payment History</h4>
                                             <div className="table-responsive" >
-                                                <h4>Payment History</h4>
                                                 <Table className="table align-middle table-nowrap">
                                                     <thead>
                                                         <tr>
@@ -429,6 +487,7 @@ const ApprovedTranctionModel = props => {
                                                             <th>Bank Name</th>
 
                                                             <th>Account No.</th>
+                                                            <th>Cheque No.</th>
                                                             <th>IFSC code</th>
 
                                                             <th>Transaction ID</th>
@@ -437,22 +496,26 @@ const ApprovedTranctionModel = props => {
                                                     </thead>
                                                     <tbody>
                                                         {selected.pHArray.map((item) => {
-                                                            if (item.disputeType == "DISPUTE_TYPE1") return
-                                                            if (item.disputeType == "DISPUTE_TYPE2") return
-                                                            if (item.disputeType == "DISPUTE_TYPE3") return
-                                                            return <tr key={item}>
-                                                                <td>{(item.paymentDate)}</td>
-                                                                {/* <td>Bank Deposit</td> */}
-                                                                <td className="text-right">{numberFormat(item.amtPaid)}</td>
-                                                                <td>{item.paymentMode}</td>
-                                                                <td>{item.bankName}</td>
+                                                            if (item.requestor == 'DEBTOR') {
+                                                                if (item.disputeType == "DISPUTE_TYPE1") return
+                                                                if (item.disputeType == "DISPUTE_TYPE2") return
+                                                                if (item.disputeType == "DISPUTE_TYPE3") return
+                                                                return <tr key={item}>
+                                                                    <td>{(item.paymentDate)}</td>
+                                                                    {/* <td>Bank Deposit</td> */}
+                                                                    <td className="text-right">{numberFormat(item.amtPaid)}</td>
+                                                                    <td>{item.paymentMode}</td>
+                                                                    <td>{item.bankName}</td>
 
-                                                                <td>{item.bankAccNumber}</td>
-                                                                <td>{item.ifsc}</td>
+                                                                    <td>{item.bankAccNumber}</td>
+                                                                    <td>{item.chequeNumber}</td>
+                                                                    <td>{item.ifsc}</td>
 
-                                                                <td>{item.transactionId}</td>
-                                                                <td>{moment(item.createdAt).format("DD-MM-YYYY")}</td>
-                                                            </tr>
+                                                                    <td>{item.transactionId}</td>
+                                                                    <td>{moment(item.createdAt).format("DD-MM-YYYY")}</td>
+                                                                </tr>
+                                                            }
+
                                                         })}
 
                                                         {/* Add more rows as needed */}
@@ -463,9 +526,40 @@ const ApprovedTranctionModel = props => {
 
                                             <div className="file-list">
                                                 {selected.pHArray.map((file, index) => {
-                                                    if (file.disputeType !== '') return null; // Skip non-Record Payment files
-                                                    return <FileDisplay key={index} file={file} documentView={documentView} />;
+                                                    if (file.requestor == 'DEBTOR') {
+                                                        if (file.disputeType !== '') return null; // Skip non-Record Payment files
+                                                        return <FileDisplayDebtor key={index} file={file} documentView={documentView} requestor={'DEBTOR'} numberFormat={numberFormat} />;
+                                                    }
                                                 })}
+
+                                                {selected.defaulterEntry?.debtorcacertificate != '' && selected.defaulterEntry?.debtorcacertificate != null && (
+                                                    <div className="file-container">
+                                                        <div className="file-header">
+                                                            <div><strong>Additional Document</strong></div>
+                                                            {selected.defaulterEntry?.debtorcacertificate.createdAt && (
+                                                                <span style={{ display: 'inline-block' }}>
+                                                                    Documents Uploaded On: {moment(selected.defaulterEntry?.debtorcacertificate.createdAt).format("DD-MM-YYYY")}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        <CAAttchment file={selected.defaulterEntry} documentView={documentView} />
+                                                    </div>
+                                                )}
+
+                                                {selected.defaulterEntry?.debtoradditionaldocuments != null && selected.defaulterEntry?.debtoradditionaldocuments.length > 0 && (
+                                                    <div className="file-container">
+                                                        <div className="file-header">
+                                                            <div><strong>Additional Document</strong></div>
+                                                            {selected.defaulterEntry?.debtoradditionaldocuments[0]?.createdAt && (
+                                                                <span style={{ display: 'inline-block' }}>
+                                                                    Documents Uploaded On: {moment(selected.defaulterEntry?.debtoradditionaldocuments[0].createdAt).format("DD-MM-YYYY")}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        <OtherDocuments file={selected.defaulterEntry} documentView={documentView} />
+                                                    </div>
+                                                )}
+
                                             </div>
 
                                             <div className="file-list">
@@ -495,7 +589,7 @@ const ApprovedTranctionModel = props => {
                                                                 <div><strong>Dispute Type : </strong><span style={{ display: 'flex' }}>SELLER HAS NOT GIVEN GST INPUT CREDIT FOR INVOICE RAISED</span></div>
                                                                 <span style={{ display: 'inline-block' }}>Documents Uploaded On :- {moment(file.debtorcacertificate?.createdAt).format("DD-MM-YYYY")}</span>
                                                             </div>
-                                                            <div className="buyer-remarks"><strong>CA Attachments</strong></div>
+                                                            <div className="buyer-remarks"><strong>CA Certificate Attachments</strong></div>
                                                             <div className="attachments-container">
                                                                 {file?.debtorcacertificate != '' && file?.debtorcacertificate != null &&
                                                                     <Col md="6">
@@ -532,9 +626,6 @@ const ApprovedTranctionModel = props => {
                                                 })}
                                             </div>
 
-
-
-
                                             <div className="file-list">
                                                 {selected.pHArray.map((file, index) => {
                                                     if (file.disputeType != 'DISPUTE_TYPE3') return
@@ -550,7 +641,7 @@ const ApprovedTranctionModel = props => {
                                                                 <div className=""><strong>Reason</strong></div>
                                                                 <div className="">
                                                                     {file.otherDisputeReasons?.map((value, i) => {
-                                                                        console.log("valuevalue", value)
+
 
                                                                         return <Col xs={12} key={i} className="">{i + 1}. {value}</Col>
                                                                     })}
@@ -568,6 +659,7 @@ const ApprovedTranctionModel = props => {
                                                             <div className="buyer-remarks"><strong>Attachments</strong></div>
                                                             <div className="attachments-container">
                                                                 {file?.supportingDocuments?.length > 0 && file.supportingDocuments?.map((value, i) => {
+
 
                                                                     let currentImg1 = ''
 
@@ -709,6 +801,30 @@ const ApprovedTranctionModel = props => {
                                     </Card>
                                 </Col>
                             </Row> : ""}
+
+                            {
+                                selected.defaulterEntry?.reopenReason != undefined && selected.defaulterEntry?.reopenReason != "" ? <Row>
+
+                                    <Col md="12" className="mt-4">
+                                        <h4>Reason For Reopen Ticket</h4>
+                                        <Card className="mb-3 shadow">
+                                            <CardBody className="seller-card-body">
+
+
+
+                                                <p className="mb-2 text-capitalize">
+                                                    <strong className=" ">{selected.defaulterEntry?.reopenRequester == "DEBTOR" ? selected?.defaulterEntry?.debtor?.companyName : selected?.defaulterEntry?.creditor?.companyName}:</strong> &nbsp;
+                                                    <span className="">{selected.defaulterEntry?.reopenReason}</span>
+                                                </p>
+
+                                            </CardBody>
+                                        </Card>
+                                    </Col>
+
+
+                                </Row> : ""
+                            }
+
                             <Row>
 
                                 <Col md="12" className="mt-4">

@@ -923,9 +923,6 @@ function LatesttransactionViewDetails(props) {
                                     })}
                                 </div>
 
-
-
-
                                 <div className="file-list">
                                     {selected.pHArray.map((file, index) => {
                                         if (file.disputeType != 'DISPUTE_TYPE3') return
@@ -1114,7 +1111,7 @@ function LatesttransactionViewDetails(props) {
 
 
                 {
-                    selected.pHArray[0]?.reopenReason != undefined && selected.pHArray[0]?.reopenReason != "" ? <Row>
+                    selected.defaulterEntry?.reopenReason != undefined && selected.defaulterEntry?.reopenReason != "" ? <Row>
 
                         <Col md="12" className="mt-4">
                             <h4>Reason For Reopen Ticket</h4>
@@ -1124,8 +1121,8 @@ function LatesttransactionViewDetails(props) {
 
 
                                     <p className="mb-2 text-capitalize">
-                                        <strong className=" ">{selected.pHArray[0]?.requestor == "DEBTOR" ? selected?.defaulterEntry?.debtor?.companyName : selected?.defaulterEntry?.creditor?.companyName}:</strong> &nbsp;
-                                        <span className="">{selected.pHArray[0]?.reopenReason}</span>
+                                        <strong className=" ">{selected.defaulterEntry?.reopenRequester == "DEBTOR" ? selected?.defaulterEntry?.debtor?.companyName : selected?.defaulterEntry?.creditor?.companyName}:</strong> &nbsp;
+                                        <span className="">{selected.defaulterEntry?.reopenReason}</span>
                                     </p>
 
                                 </CardBody>
