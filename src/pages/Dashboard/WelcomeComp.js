@@ -70,7 +70,7 @@ const WelcomeComp = props => {
                     <p className="text-muted mb-0">Revenue</p>
                   </Col>
                 </Row> */}
-                <div className="mt-4">
+                <div className="mt-4 d-flex justify-content-end">
                   <Link
                     to="/profile"
                     className="btn btn-primary  btn-sm"

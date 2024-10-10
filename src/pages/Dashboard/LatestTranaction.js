@@ -327,7 +327,7 @@ const LatestTranaction = props => {
     <React.Fragment>
       <Card>
         <CardBody>
-          {props.isDisputedModal != true ? <div className="mb-4 h4 card-title">Latest Reported Transactions</div> : ""}
+          {props.isDisputedModal != true && <Breadcrumbs title="Latest Reported Transactions" breadcrumbItem="Latest Reported Transactions" />}
           {adminRole == 'L3' && <ExportFileComponent url={'/api/admin/downloadAllTransactions'} fileName={'AllTransactions'} />}
           {selectLoading == false ? <Spinner /> : <TableContainer
             columns={columns}
