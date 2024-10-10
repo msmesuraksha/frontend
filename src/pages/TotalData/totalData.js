@@ -6,6 +6,7 @@ import {
     Button,
     Card,
     CardBody,
+    Container,
     Input,
     Modal,
     ModalHeader,
@@ -13,6 +14,8 @@ import {
     ModalFooter,
 } from "reactstrap"
 import InvoiceModal from "pages/Dashboard/InvoicePopupModal"
+
+import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 import * as moment from "moment";
 import { useSelector, useDispatch } from "react-redux"
@@ -398,26 +401,31 @@ export const TotalData = props => {
 
     return (
         <React.Fragment>
+
             <InvoiceModal isOpen={modal1} toggle={toggleViewModal} selected={selected} />
             {/* <ConfirmModal isOpen={isModalOpen} toggle={toggleModal} /> */}
 
+            <div className="page-content">
+                <Container fluid={true}>
+                    <Breadcrumbs title="Total Data" breadcrumbItem="Total Data" />
+                    <Card>
+                        <CardBody>
+                            {adminRole == 'L3' && <ExportFileComponent url={'/api/admin/downloadAllTransactions'} fileName={'AllTransactions'} />}
+                            {selectLoading == false ? <Spinner /> : <TableContainer
+                                columns={columns}
+                                data={filteredData}
+                                isGlobalFilter={true}
+                                isAddOptions={false}
+                                customPageSize={20}
+                            />}
+                            <p className="">Due Since : The number of due days is calculated from date of oldest invoice.
+                            </p>
+                            <p> &nbsp;</p>
+                        </CardBody>
+                    </Card>
+                </Container>
+            </div>
 
-            <Card>
-                <CardBody>
-                    <div className="mb-4 h5 card-title " style={{ marginTop: '4rem' }}>Total Data</div>
-                    {adminRole == 'L3' && <ExportFileComponent url={'/api/admin/downloadAllTransactions'} fileName={'AllTransactions'} />}
-                    {selectLoading == false ? <Spinner /> : <TableContainer
-                        columns={columns}
-                        data={filteredData}
-                        isGlobalFilter={true}
-                        isAddOptions={false}
-                        customPageSize={20}
-                    />}
-                    <p className="">Due Since : The number of due days is calculated from date of oldest invoice.
-                    </p>
-                    <p> &nbsp;</p>
-                </CardBody>
-            </Card>
         </React.Fragment>
     )
 }

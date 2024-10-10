@@ -40,6 +40,8 @@ import {
   Role
 } from "./registrationCol";
 
+import Breadcrumbs from "../../components/Common/Breadcrumb";
+
 import TableContainer from "../../components/Common/TableContainer";
 import UserViewModal from "./UserViewModal";
 import { useDispatch, useSelector } from "react-redux";
@@ -73,7 +75,7 @@ const UserList = props => {
     }
 
   }, []);
-console.log("admindataadmindata",admindata)
+
 
   const handleEdit = (project) => {
 
@@ -195,31 +197,29 @@ console.log("admindataadmindata",admindata)
 
   return (
     <React.Fragment>
-      <div className="mb-4 h4 card-title mt-lg-4">..</div>
-      {/* <div className="mb-4 h4 card-title mt-lg-5"> Employee List</div> */}
-      <div className="container">
-
+      <div className="page-content">
+        <Container fluid={true}>
+          <Breadcrumbs title="Add a Employee" breadcrumbItem="Add a Employee" />
+        </Container>
+        {isModalOpen && <AdminRegistrationModal isOpen={isModalOpen} toggle={toggleAdminModal} />}
+        {isDeleteModalOpen && <DeleteModal isOpen={isDeleteModalOpen} toggle={toggleDeleteModal} deletedId={deletedId} />}
+        <Card>
+          <CardBody>
+            {adminRole != 'L1' && <div className="d-flex justify-content-end align-items-center mb-3">
+              <Button type="button" color="primary" className="btn-sm btn-rounded" onClick={toggleAdminModal}>
+                Add A Employee
+              </Button>
+            </div>}
+            <TableContainer
+              columns={adminRole == 'L1' ? columns.filter((value) => value.Header != 'Action') : columns}
+              data={adminData != undefined && adminData.data != undefined ? adminData.data.data.response : []}
+              isGlobalFilter={true}
+              isAddOptions={false}
+              customPageSize={20}
+            />
+          </CardBody>
+        </Card>
       </div>
-      {/* <UserViewModal isOpen={modal1} toggle={toggleViewModal} /> */}
-      <AdminRegistrationModal isOpen={isModalOpen} toggle={toggleAdminModal} />
-      <DeleteModal isOpen={isDeleteModalOpen} toggle={toggleDeleteModal} deletedId={deletedId} />
-      <Card>
-        <CardBody>
-          <h4 className="mb-0 mt-sm-0 mb-sm-2 font-size-18 mt-2">Add a Employee</h4>
-          {adminRole != 'L1' && <div className="d-flex justify-content-end align-items-center mb-3">
-            <Button type="button" color="primary" className="btn-sm btn-rounded" onClick={toggleAdminModal}>
-              Add A Employee
-            </Button>
-          </div>}
-          <TableContainer
-            columns={adminRole == 'L1' ? columns.filter((value) => value.Header != 'Action') : columns}
-            data={adminData != undefined && adminData.data != undefined ? adminData.data.data.response : []}
-            isGlobalFilter={true}
-            isAddOptions={false}
-            customPageSize={20}
-          />
-        </CardBody>
-      </Card>
     </React.Fragment>
   );
 };

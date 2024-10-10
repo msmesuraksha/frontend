@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react"
 import { Row, Col, Card, CardBody } from "reactstrap"
 import { Link } from "react-router-dom"
 
-import avatar1 from "../../assets/images/users/avatar-1.jpg"
+import avatar1 from "../../assets/images/users/user.png"
 import profileImg from "../../assets/images/profile-img.png"
 
 
@@ -33,16 +33,13 @@ const WelcomeComp = props => {
       <Card className="overflow-hidden">
         <div className="bg-primary bg-soft">
           <Row>
-            <Col xs="3">
-            <div className="text-primary p-3">
-            <h5 className="text-primary">Welcome Back !</h5>
-            <p className="mb-0">MSME Suraksha</p>
-            </div>
+            <Col xs="9">
+              <div className="text-primary p-3">
+                <h5 className="text-primary">Welcome Back !</h5>
+                <p>MSME Suraksha Dashboard</p>
+              </div>
             </Col>
-            <Col xs="6">
-
-            </Col>
-            <Col xs="2" className="align-self-end">
+            <Col xs="3" className="align-self-end">
               <img src={profileImg} alt="" className="img-fluid" />
             </Col>
           </Row>
@@ -51,7 +48,11 @@ const WelcomeComp = props => {
           <Row>
             <Col sm="4">
               <div className="avatar-md profile-user-wid mb-4">
-              <i className='bx bxs-user-circle' style={{ fontSize:'50px'}}></i>
+                <img
+                  src={avatar1}
+                  alt=""
+                  className="img-thumbnail rounded-circle"
+                />
               </div>
               <h5 className="font-size-15 text-truncate">{username}</h5>
               <p className="text-muted mb-0 text-truncate">{rol}</p>
@@ -59,31 +60,24 @@ const WelcomeComp = props => {
 
             <Col sm="8">
               <div className="pt-4">
-                <Row>
+                {/* <Row>
                   <Col xs="6">
-                    {/* <h5 className="font-size-15">125</h5>
-                    <p className="text-muted mb-0">Projects</p> */}
+                    <h5 className="font-size-15">125</h5>
+                    <p className="text-muted mb-0">Projects</p>
                   </Col>
                   <Col xs="6">
-                    {/* <h5 className="font-size-15">$1245</h5>
-                    <p className="text-muted mb-0">Revenue</p> */}
+                    <h5 className="font-size-15">$1245</h5>
+                    <p className="text-muted mb-0">Revenue</p>
                   </Col>
-                </Row>
-                <Row>
-                  <Col xs="9">
-                  </Col>
-                  <Col xs="3">
-                    <div className="mt-4">
-                      <Link
-                        to="/profile"
-                        className="btn btn-primary  btn-sm"
-                      >
-                        View Profile <i className="mdi mdi-arrow-right ms-1"></i>
-                      </Link>
-                    </div>
-                  </Col>
-                </Row>
-
+                </Row> */}
+                <div className="mt-4">
+                  <Link
+                    to="/profile"
+                    className="btn btn-primary  btn-sm"
+                  >
+                    View Profile <i className="mdi mdi-arrow-right ms-1"></i>
+                  </Link>
+                </div>
               </div>
             </Col>
           </Row>

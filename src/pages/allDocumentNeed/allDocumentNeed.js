@@ -6,6 +6,7 @@ import {
     Button,
     Card,
     CardBody,
+    Container,
     Input,
     Modal,
     ModalHeader,
@@ -42,6 +43,8 @@ import { fetchAllDocumentNeedStart } from "store/allDocumentNeedTrans/allDocumen
 import { selectAllDocumentNeedLoading, selectAllDocumentNeedMap } from "store/allDocumentNeedTrans/allDocumentNeedTrans.selecter"
 
 import { StatusAndOpinionObj } from "pages/Dashboard/LatestTranaction"
+
+import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 export const AllDocumentNeed = props => {
 
@@ -395,21 +398,27 @@ export const AllDocumentNeed = props => {
         <React.Fragment>
             <InvoiceModal isOpen={modal1} toggle={toggleViewModal} selected={selected} />
             {/* <ConfirmModal isOpen={isModalOpen} toggle={toggleModal} /> */}
-            <Card>
-                <CardBody>
-                    <div className="mb-4 h5 card-title " style={{ marginTop: '4rem' }}>Old Tickets</div>
-                    {/*  {adminRole == 'L3' && <ExportFileComponent url={'/api/admin/downloadAllTransactions'} fileName={'AllTransactions'} />} */}
-                    {selectLoading == false ? <Spinner /> : <TableContainer
-                        columns={columns}
-                        data={filteredData}
-                        isGlobalFilter={true}
-                        isAddOptions={false}
-                        customPageSize={20}
-                    />}
-                    <p className="">Due Since : The number of due days is calculated from date of oldest invoice.
-                    </p>
-                </CardBody>
-            </Card>
+            <div className="page-content">
+                <Container fluid={true}>
+                    <Breadcrumbs title="Old Tickets" breadcrumbItem="Old Tickets" />
+                    <Card>
+                        <CardBody>
+
+                            {/*  {adminRole == 'L3' && <ExportFileComponent url={'/api/admin/downloadAllTransactions'} fileName={'AllTransactions'} />} */}
+                            {selectLoading == false ? <Spinner /> : <TableContainer
+                                columns={columns}
+                                data={filteredData}
+                                isGlobalFilter={true}
+                                isAddOptions={false}
+                                customPageSize={20}
+                            />}
+                            <p className="">Due Since : The number of due days is calculated from date of oldest invoice.
+                            </p>
+                        </CardBody>
+                    </Card>
+                </Container>
+            </div>
+
         </React.Fragment>
     )
 }

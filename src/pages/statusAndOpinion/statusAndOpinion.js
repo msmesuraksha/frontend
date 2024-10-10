@@ -11,6 +11,7 @@ import {
     ModalHeader,
     ModalBody,
     ModalFooter,
+    Container
 } from "reactstrap"
 import InvoiceModal from "pages/Dashboard/InvoicePopupModal"
 
@@ -42,6 +43,8 @@ import { fetchAllDocumentNeedStart, fetchAllOtherStatusStart } from "store/allDo
 import { selectAllDocumentNeedLoading, selectAllDocumentNeedMap, selectCloseTicketMap, selectAllOtherDocumentMap } from "store/allDocumentNeedTrans/allDocumentNeedTrans.selecter"
 
 import { StatusAndOpinionObj } from "pages/Dashboard/LatestTranaction"
+
+import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 export const StatusAndOpinionModule = props => {
 
@@ -383,20 +386,25 @@ export const StatusAndOpinionModule = props => {
     return (
         <React.Fragment>
             <InvoiceModal isOpen={modal1} toggle={toggleViewModal} selected={selected} />
-            <Card>
-                <CardBody>
-                    <div className="mb-4 h5 card-title " style={{ marginTop: '4rem' }}>Status and Opinion</div>
-                    <TableContainer
-                        columns={columns}
-                        data={filteredData}
-                        isGlobalFilter={true}
-                        isAddOptions={false}
-                        customPageSize={20}
-                    />
-                    <p className="">Due Since : The number of due days is calculated from date of oldest invoice.
-                    </p>
-                </CardBody>
-            </Card>
+            <div className="page-content">
+                <Container fluid={true}>
+                    <Breadcrumbs title="Status and Opinion" breadcrumbItem="Status and Opinion" />
+                    <Card>
+                        <CardBody>
+                            <TableContainer
+                                columns={columns}
+                                data={filteredData}
+                                isGlobalFilter={true}
+                                isAddOptions={false}
+                                customPageSize={20}
+                            />
+                            <p className="">Due Since : The number of due days is calculated from date of oldest invoice.
+                            </p>
+                        </CardBody>
+                    </Card>
+                </Container>
+            </div>
+
         </React.Fragment>
     )
 }

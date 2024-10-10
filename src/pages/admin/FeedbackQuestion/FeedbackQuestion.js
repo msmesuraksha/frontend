@@ -11,6 +11,7 @@ import {
     Table,
     Label,
     Input,
+    Container
 } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Moment from 'react-moment';
@@ -19,6 +20,8 @@ import "../../admin/Common.scss"
 import Select from "react-select"
 
 import { toast, ToastContainer } from "react-toastify";
+
+import Breadcrumbs from "../../../components/Common/Breadcrumb";
 
 import { addFeedbackQuestionStart } from "store/addFeedbackQuestion/addFeedbackQuestion.action";
 import { addFeedbackQuestionSelect } from "store/addFeedbackQuestion/addFeedbackQuestion.selecter";
@@ -114,62 +117,76 @@ const FeedbackQuestionModel = props => {
 
 
     return (
-        <React.Fragment className="text-capitalize">
+        <React.Fragment>
+            <div className="page-content">
+                <Container fluid={true}>
+                    <Breadcrumbs title="Add Feedback Question" breadcrumbItem="Add Feedback Question" />
+                    <Card >
+                        <CardBody>
+                            <ModalBody>
+                                <Row className="mt-3" style={{ padding: '5px 10px' }}>
+                                    <div style={{ overflowX: 'auto' }}> {/* Scrollable container */}
+                                        <table className="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Questions</th>
+                                                    <th scope="col">Question Type</th>
+                                                    <th scope="col">Value</th>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {dataTable.map((item, index) => (
+                                                    <tr key={item}>
+                                                        <td style={{ width: '2%' }}>#{index + 1}</td>
+                                                        <QuestionSelecter
+                                                            item={item}
+                                                            indexValue={index}
+                                                            setAddDataTable={setAddDataTable}
+                                                            getFeebBackQuestion={getFeebBackQuestion}
+                                                            addDataTable={addDataTable}
+                                                        />
+                                                        <td>
+                                                            <Button
+                                                                className="btn btn-sm btn-danger"
+                                                                onClick={() => handleRemove(index, item)}>
+                                                                <i className='bx bx-trash'></i> &nbsp; Remove
+                                                            </Button>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        <Button
+                                                            className="btn btn-sm btn-info"
+                                                            onClick={handleAddRow}>
+                                                            <i className='bx bx-plus'></i> &nbsp; Add New Question
+                                                        </Button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </Row>
+                                <div>
+                                    <Button
+                                        onClick={FinalAPICAL}
+                                        className="btn btn-md btn-info"
+                                        disabled={addDataTable.length === 0}>
+                                        Submit
+                                    </Button>
+                                </div>
+                            </ModalBody>
 
-            <Card className="mt-5">
-                <CardBody>
-                    <div className="modal-content">
-                        <br />
-                        <br />
-                        <br />
-                        <ModalHeader className="ml-3">Add Feedback Question</ModalHeader>
-                        <ModalBody style={{ padding: '20px 20px' }}>
-                            <Row className="mt-3" style={{ padding: '5px 10px' }}>
-                                <table className="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Questions</th>
-                                            <th scope="col">Question Type</th>
-                                            <th scope="col">Value</th>
-                                            <th scope="col">Action</th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {dataTable.map((item, index) => {
-                                            return <tr key={item}>
-                                                <td style={{ width: '2%' }}>
-                                                    #{index + 1}
-                                                </td>
-                                                <QuestionSelecter item={item} indexValue={index} setAddDataTable={setAddDataTable} getFeebBackQuestion={getFeebBackQuestion} addDataTable={addDataTable} />
-                                                <td>
-                                                    <Button className="btn btn-sm btn-danger" onClick={() => handleRemove(index, item)}>
-                                                        <i className='bx bx-trash'></i> &nbsp;  Remove
-                                                    </Button>
-                                                </td>
-                                            </tr>
-                                        })}
-                                        <tr>
-                                            <td></td>
-                                            <td>
-                                                <Button className="btn btn-sm btn-info" onClick={() => handleAddRow()}>
-                                                    <i className='bx bx-plus'></i> &nbsp;Add New Question
-                                                </Button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </Row>
-                            <div>
-                                <Button onClick={() => FinalAPICAL()} className="btn btn-md btn-info" disabled={addDataTable.length == 0}>Submit</Button>
-                            </div>
-                        </ModalBody>
-                    </div>
-                </CardBody>
-                <ToastContainer />
-            </Card>
-            <ToastContainer />
+                        </CardBody>
+                        <ToastContainer />
+                    </Card>
+                </Container>
+
+            </div>
         </React.Fragment>
     );
 };
@@ -266,6 +283,7 @@ const QuestionSelecter = ({ item, indexValue, setAddDataTable, getFeebBackQuesti
                         "value": selected.value
                     }, index)}
                 />
+
             </td>
             <td>
                 {selectQType === "TEXT" ? (

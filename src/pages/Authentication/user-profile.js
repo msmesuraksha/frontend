@@ -33,6 +33,8 @@ import { editProfile, resetProfileFlag } from "../../store/actions";
 
 import { profileEditAdminStart } from "store/ProfileEditAdmin/profileEditAdmin.action";
 
+import avatar1 from "../../assets/images/users/user.png"
+
 const UserProfile = () => {
 
   //meta title
@@ -154,38 +156,30 @@ const UserProfile = () => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          {/* Render Breadcrumb */}
-          {/* <Breadcrumb title="Bafana" breadcrumbItem="Profile" /> */}
-
           <Row>
             <Col lg="12">
               {error && error ? <Alert color="danger">{error}</Alert> : null}
               {success ? <Alert color="success">{success}</Alert> : null}
-
               <Card>
                 <CardHeader className=" align-self-left d-flex " style={{ background: '#FFFFFF' }}>
                   <Breadcrumb title="Bafana" breadcrumbItem="Profile" />
-
-
-
                 </CardHeader>
                 <CardBody>
-                  <div>
-                    <div className="ms-3 d-flex">
-                      <div>
-
-                        <i className='bx bxs-user-circle' style={{ fontSize: "40px" }}></i>
-
-
+                  <Row xl="12">
+                    <Col sm="2">
+                      <div className="avatar-md">
+                        <img
+                          src={avatar1}
+                          alt=""
+                          className="img-thumbnail rounded-circle"
+                        />
                       </div>
-                      <div>
-                        <p className="mb-1 ml-3 pl-3 pt-2 text-capitalize" style={{ fontSize: '16px' }}>Admin Name : {name}</p>
-                        <p className="mb-1 ml-3 pl-3 pt-2" style={{ fontSize: '16px' }}>Admin Role :  {AdminRole}</p>
-
-                      </div>
-                    </div>
-
-                  </div>
+                    </Col>
+                    <Col sm="4" style={{ fontSize: '16px' }} className="d-flex flex-column justify-content-center">
+                      <div className="text-capitalize" >Admin Name : {name}</div>
+                      <div >Admin Role :  {AdminRole}</div>
+                    </Col>
+                  </Row>
                 </CardBody>
               </Card>
             </Col>
@@ -198,109 +192,70 @@ const UserProfile = () => {
                     <Row >
                       <Col lg={8}>
                         <Breadcrumb title="Bafana" breadcrumbItem="overview" />
-
-
                       </Col>
-
-                      {adminRole == 'L2' && <Col lg={4} className="d-flex" style={{ justifyContent: 'end' }}>
+                      {adminRole == 'L3' && <Col lg={4} className="d-flex" style={{ justifyContent: 'end' }}>
                         <button className=" btn btn-info d-flex ml-auto" onClick={() => handleChange()} style={{ background: '', border: 'none', height: '35px', width: '80px', justifyContent: 'center' }}>
                           Edit
                         </button>
                       </Col>}
-
-
                     </Row>
-
                   </CardHeader>
                   <CardBody>
-                    <div className="flex-grow-1 align-self-center">
-                      <div className="text-muted">
-
+                    <Row>
+                      <Col xl={12}>
                         <Row>
-                          <Col lg={4}>
-                            <p className="mb-1 ml-3"> Full Name :</p>
-                            <p className="mb-1 ml-3">Email Address :</p>
-                            {/* <p className="mb-1 ml-3">Id no :</p>  */}
-                            <p className="mb-1 ml-3">Role :</p>
-
-                          </Col>
-                          <Col lg={4}>
-                            <p className="mb-1 ml-3 text-capitalize"> {name}</p>
-                            <p className="mb-1 ml-3"> {email}</p>
-                            {/* <p className="mb-1 ml-3"> #{idx}</p>  */}
-                            <p className="mb-1 ml-3"> {AdminRole}</p>
-
-
-
-                          </Col>
+                          <Col xl={2}><p> Full Name :</p></Col>
+                          <Col><p className=" text-capitalize"> {name}</p></Col>
                         </Row>
+                        <Row>
+                          <Col xl={2}><p>Email Address :</p></Col>
+                          <Col><p> {email}</p></Col>
+                        </Row>
+                        <Row>
+                          <Col xl={2}><p>Role :</p></Col>
+                          <Col><p> {AdminRole}</p></Col>
+                        </Row>
+                      </Col>
+                    </Row>
 
-
-
-
-
-                      </div>
-                    </div>
                   </CardBody>
                 </Card>
                 :
                 <Card>
-
                   <CardHeader className=" " style={{ background: '#FFFFFF' }}>
                     <Row >
                       <Col lg={8}>
                         <Breadcrumb title="Bafana" breadcrumbItem="Profile Edit" />
-
-
                       </Col>
                       <Col lg={4} className="d-flex" style={{ justifyContent: 'end' }}>
                         <button className=" btn btn-info d-flex ml-auto" onClick={() => handleChange()} style={{ background: '', border: 'none', height: '35px', width: '80px', justifyContent: 'center' }}>
                           close
                         </button>
                       </Col>
-
                     </Row>
-
                   </CardHeader>
                   <CardBody>
                     <Row>
-
-                      <Col lg={1}>
-
-
-                      </Col>
-                      <Col lg={8} className=" mx-auto">
+                      <Col lg={8} >
                         <br />
-
                         <form >
-
                           <label>
                             <span style={{ marginRight: "64px" }}>
                               Name:
                             </span>
-
                             <input className="p-1" type="text" value={name} disabled style={{ width: '300px' }} />
                           </label>
                           <br />
-
                           <label>
                             <span style={{ marginRight: "64px" }}>
                               Email:      </span>
-
                             <input disabled className="p-1" type="text" value={email} style={{ width: '300px' }} />
-
                           </label>
-
                           <br />
-
                           <label className="d-flex">
                             <span style={{ marginRight: "65px" }}>
                               Role
                             </span>
-                            {/* <input className="p-1" type="text" value={AdminRole} style={{ width: '300px' }} onChange={() => {
-                              setadminRole(event.target.value)
-                            }}
-                            /> */}
                             <Select
                               onChange={s => {
                                 setadminNew(s.value)
@@ -309,31 +264,19 @@ const UserProfile = () => {
                               options={opationList}
                               placeholder="Select Admin Role"
                             />
-
                           </label>
                           <br />
-
                           <label
                             className="visually-hidden custom-content"
                             htmlFor="customerSelect"
                           >
                             Select Customer
-
-
                           </label>
-
-
-
-
-
                         </form>
                         <br />
                         <Button disabled={Adminnew == '' ? true : false} className=" btn btn-info " style={{ background: '', border: 'none', justifyContent: 'end' }} onClick={() => handlesubmit()}>
                           submit
                         </Button>
-                      </Col>
-                      <Col lg={1}>
-
                       </Col>
                     </Row>
                   </CardBody>

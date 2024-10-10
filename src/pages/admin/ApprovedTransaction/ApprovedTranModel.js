@@ -27,6 +27,8 @@ import { DocumentViewModule } from "../documentViewer/documentView";
 
 import './folder.css';
 
+import { OneFirstCapitalizeWords } from "pages/Dashboard/LatesttransactionViewDetails";
+
 
 const ApprovedTranctionModel = props => {
 

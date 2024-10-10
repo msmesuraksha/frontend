@@ -5,6 +5,8 @@ import TableContainer from "../../../components/Common/TableContainer";
 import { fetchCompanyStateCityStart, IsCompanyCityOpen, IsCompanyStateCityOpen } from "store/CompanyDetails/CompanyDetails.action";
 import { selectComapnyStateCity } from "store/CompanyDetails/CompanyDetails.selecter";
 
+import Breadcrumbs from "../../../components/Common/Breadcrumb";
+
 
 export const MemberStateCityData = ({ selectedState, selectedCity }) => {
     const dispatch = useDispatch();
@@ -105,9 +107,9 @@ export const MemberStateCityData = ({ selectedState, selectedCity }) => {
 
     return (
         <React.Fragment>
-            <Card className=" mt-3">
-                <CardBody className=" mt-3">
-                    <div className="mb-4 h5 mt-5 card-title ">{selectedCity.state}: Member List</div>
+            <Card>
+                <CardBody>
+                    <Breadcrumbs title={`${selectedState} - ${selectedCity.state} : Member List`} breadcrumbItem={`${selectedState} - ${selectedCity.state} : Member List`} />
                     <Button style={{ float: 'right' }} className="'btn bg-primary p-2 backtoDashButton" onClick={() => backMainModule()}>Back to City table</Button>
                     {selectComapnyStateCityData && <TableContainer
                         columns={columns}

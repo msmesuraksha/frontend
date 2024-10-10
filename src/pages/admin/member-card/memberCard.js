@@ -2,11 +2,13 @@ import React, { useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import withRouter from "components/Common/withRouter";
 import { isEmpty } from "lodash";
-import { Button, Card, CardBody, Row, Col, CardHeader } from "reactstrap";
+import { Button, Card, CardBody, Row, Col, CardHeader, Container } from "reactstrap";
 import CreatePlanModel from "./createPlanmodel";
 import { useDispatch, useSelector } from "react-redux";
 import { getSubscriptionPckg } from "store/LatestTransaction/latestTrans.action"
 import { getSubscriptionListReducer } from "store/LatestTransaction/latestTans.selecter"
+
+import Breadcrumbs from "../../../components/Common/Breadcrumb";
 
 import Moment from 'react-moment';
 const data = [
@@ -74,58 +76,60 @@ const MemberCard = props => {
 
     return (
         <React.Fragment className="text-capitalize">
-            <CreatePlanModel isOpen={isModalOpen} toggle={toggleAdminModal} />
+            <div className="page-content">
+                <Container fluid={true}>
+                    <Breadcrumbs title="subscription Plans" breadcrumbItem="subscription Plans" />
+                    <CreatePlanModel isOpen={isModalOpen} toggle={toggleAdminModal} />
+                    <Card>
+                        <CardBody>
+                            <Row>
+                                <Col md={10}>
+                                </Col>
+                                <Col md={2}>
+                                    <Button onClick={toggleAdminModal} className="btn btn-info">
+                                        Create A Plan
+                                    </Button>
+                                </Col>
+                            </Row>
 
-            <Card className="mt-5">
-                <CardBody className="mt-5">
-                    <Row>
-                        <Col md={10}>
-                            <h5 className="text-capitalize">
-                                subscription Plans
-                            </h5>
-                        </Col>
-                        <Col md={2}>
-                            <Button onClick={toggleAdminModal} className="btn btn-info">
-                                Create A Plan
-                            </Button>
-                        </Col>
-                    </Row>
+                            <br />
 
-                    <br />
+                            <Row className="" style={{ padding: "0px 50px 0px 50px" }}>
+                                {getSubscriptionList != undefined ? getSubscriptionList.map((item) => {
+                                    return <Col md={4} key={item} className="">
+                                        <Card className="shadow-lg text-center">
 
-                    <Row className="" style={{ padding: "0px 50px 0px 50px" }}>
-                        {getSubscriptionList != undefined ? getSubscriptionList.map((item) => {
-                            return <Col md={4} key={item} className="">
-                                <Card className="shadow-lg text-center">
+                                            <div style={{ background: "#AF90E1" }} className="text-light p-3">
 
-                                    <div style={{ background: "#AF90E1" }} className="text-light p-3">
-
-                                        <h5><strong>{item.subscriptionPkgName}</strong></h5>
-
-
-                                    </div>
-                                    <div className="pt-3 pb-3">
-                                        <h5 className="text-dark"><strong>Monthly Amount : {item.monthlyAmt}</strong></h5>
-                                        <h5 className="text-dark"><strong>Yearly Amount : {item.yearlyAmt}</strong></h5>
-                                        <h5><strong style={{ color: item.subscriptionPkgAPIQuota != undefined && item.subscriptionPkgAPIQuota.length != 0 ? "#00b300" : "#ff6600" }}><span className="text-dark"></span> {item.subscriptionPkgAPIQuota != undefined && item.subscriptionPkgAPIQuota.length != 0 ? "Paid Plan" : "Free Plan"}</strong></h5>
+                                                <h5><strong>{item.subscriptionPkgName}</strong></h5>
 
 
-                                    </div>
+                                            </div>
+                                            <div className="pt-3 pb-3">
+                                                <h5 className="text-dark"><strong>Monthly Amount : {item.monthlyAmt}</strong></h5>
+                                                <h5 className="text-dark"><strong>Yearly Amount : {item.yearlyAmt}</strong></h5>
+                                                <h5><strong style={{ color: item.subscriptionPkgAPIQuota != undefined && item.subscriptionPkgAPIQuota.length != 0 ? "#00b300" : "#ff6600" }}><span className="text-dark"></span> {item.subscriptionPkgAPIQuota != undefined && item.subscriptionPkgAPIQuota.length != 0 ? "Paid Plan" : "Free Plan"}</strong></h5>
 
+
+                                            </div>
 
 
 
-                                </Card>
-                            </Col>
-                        }) : ""}
-                    </Row>
+
+                                        </Card>
+                                    </Col>
+                                }) : ""}
+                            </Row>
 
 
-                    <br />
-                    <br />
+                            <br />
+                            <br />
 
-                </CardBody>
-            </Card>
+                        </CardBody>
+                    </Card>
+                </Container>
+            </div>
+
         </React.Fragment>
     );
 };

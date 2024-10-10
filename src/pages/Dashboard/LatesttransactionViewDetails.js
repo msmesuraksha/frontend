@@ -422,7 +422,7 @@ function LatesttransactionViewDetails(props) {
         <>
             {documentViewOpen && <DocumentViewModule isOpen={documentViewOpen} toggle={toggleDocumentView} currentUrl={currentUrl} />}
             {sellerDocOpen && <SellerDocViewModule isOpen={sellerDocOpen} toggle={toggleUploiadFiles} item={sellerDocData} />}
-            <div className="mt-5 p-5">
+            <div className="page-content">
                 <Row>
                     <Col md="12">
                         <Card className="mb-1 shadow-sm">
@@ -1177,8 +1177,8 @@ function LatesttransactionViewDetails(props) {
 
                 {SelectedTab != 'closeTicket' && selected.defaulterEntry.latestStatus != 'COMPLAINT_DELETED' && <Row className="mt-4">
                     <Row md="4" className="mt-3" ><h3>Action</h3></Row>
-                    <Row className="mt-3 align-items-center d-flex" style={{ flexDirection: 'row', flexWrap: 'nowrap' }}>
-                        <div className="d-flex" style={{ width: 'auto' }}>
+                    <Row className="mt-3">
+                        <Col xl="3" className="mb-3">
                             <label className="visually-hidden" htmlFor="autoSizingSelect">Preference</label>
                             <Select
                                 options={options}
@@ -1187,19 +1187,19 @@ function LatesttransactionViewDetails(props) {
                                 placeholder="Select an option"
                                 styles={colourStyles}
                             />
-                        </div>
-                        <div style={{ fontSize: '14px', flexShrink: 'unset' }}> {definationState?.props?.children[2]}</div>
+                        </Col>
+                        <Col style={{ fontSize: '14px' }}> {definationState?.props?.children[2]}</Col>
                     </Row>
 
                     <Row md="2" className="mt-3">
-                        <Label>
+                        <Col xl="8">
                             <b>Remarks For Admin<span style={{ color: 'red' }}>*</span></b>
                             <br />
-                            <Input type="textarea" placeholder="Remarks" style={{ width: "800px", height: "150px" }}
+                            <Input type="textarea" placeholder="Remarks" style={{ height: "150px" }}
 
                                 onChange={(e) => setRemarks(e.target.value)}
                             />
-                        </Label>
+                        </Col>
 
                     </Row>
                     {checkRemarks && <div style={{ color: 'red' }} >Please Enter Remark</div>}
@@ -1279,16 +1279,18 @@ function LatesttransactionViewDetails(props) {
                                             <Row className="mt-3">
                                                 {/* <Col md={3}></Col> */}
                                                 <Col md={6} className="text-left">
+                                                    <div className="mb-3"></div>
                                                     <Label>
-                                                        Message to user <br /> <br />
-                                                        <Input type="textarea" placeholder="Enter text" style={{ width: "380px", height: "80px" }}
-
-                                                            onChange={(e) => setnotesSeller(e.target.value)}
-                                                        />
+                                                        Message to user
                                                     </Label>
+                                                    <Input type="textarea" placeholder="Enter text" style={{ height: "80px" }}
+
+                                                        onChange={(e) => setnotesSeller(e.target.value)}
+                                                    />
 
                                                 </Col>
-                                                <Col md={3}></Col>
+
+
                                             </Row>
 
                                         </CardBody>
@@ -1312,23 +1314,6 @@ function LatesttransactionViewDetails(props) {
                                                         checked={itemsBuyer.includes("cacertificate")}
                                                     />&nbsp; CA Certificate
                                                 </Label></Col>
-                                                {/* <Col md={6}>
-{/* <Label> 
-<Input type="checkbox" style={checkboxStyle}/>&nbsp; Purchase Order Document 
-</Label> */}
-                                                {/* </Col>
-<Col md={6}><Label> 
-<Input type="checkbox" style={checkboxStyle}/>&nbsp; Transportation Document 
-</Label> </Col> */}
-                                                {/* <Col md={6}><Label>
-                                                <Input type="checkbox" style={checkboxStyle}
-                                                    value="PaymentRecord"
-                                                    onChange={handleCheckboxChangeBuyer}
-                                                    checked={itemsBuyer.includes("PaymentRecord")}
-
-                                                />&nbsp; Payment Record Document
-                                            </Label></Col> */}
-
                                                 <Col md={6}><Label>
                                                     <Input type="checkbox" style={checkboxStyle}
                                                         value="additionaldocuments"
@@ -1342,15 +1327,16 @@ function LatesttransactionViewDetails(props) {
                                             <Row className="mt-5">
                                                 {/* <Col md={3}></Col> */}
                                                 <Col md={6} className="text-left">
-                                                    <Label>
-                                                        Message to user <br /> <br />
-                                                        <Input type="textarea" placeholder="Enter text" style={{ width: "380px", height: "80px" }}
+                                                    <div className="mb-3">
+                                                        <Label>
+                                                            Message to user
+                                                        </Label>
+                                                        <Input type="textarea" placeholder="Enter text" style={{ height: "80px" }}
                                                             onChange={(e) => setnotesBuyer(e.target.value)}
                                                         />
-                                                    </Label>
-
+                                                    </div>
                                                 </Col>
-                                                <Col md={3}></Col>
+
                                             </Row>
 
 
@@ -1381,7 +1367,8 @@ function LatesttransactionViewDetails(props) {
                 }
 
                 <ToastContainer />
-            </div></>
+            </div>
+        </>
 
     )
 }
@@ -1699,8 +1686,6 @@ export const OtherDocuments = ({ file, documentView }) => {
         </div>
     </>)
 }
-
-
 
 const daysSinceRefe = (cellValue, referenceDate) => {
 

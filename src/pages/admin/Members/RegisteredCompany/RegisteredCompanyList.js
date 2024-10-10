@@ -44,6 +44,8 @@ import {
   DateFormat
 } from "./RegCompanyCol";
 
+import Breadcrumbs from "../../../../components/Common/Breadcrumb";
+
 import TableContainer from "../../../../components/Common/TableContainer";
 import RegCompanyViewModal from "./RegCompanyViewModal";
 import { Country, State, City } from 'country-state-city';
@@ -188,26 +190,25 @@ const RegisteredCompanyList = props => {
   const adminRole = sessionStorage.getItem('adminRole')
   return (
     <React.Fragment>
-      <RegCompanyViewModal isOpen={modal1} toggle={toggleViewModal} />
-      {loading == false ? <Spinner /> : <Card>
-        <CardBody>
-          {/*           <Button type="button" color="primary" className="btn-sm btn-rounded float-left-button" onClick={toggleViewModal}>
-            <i className="mdi mdi-eye font-size-16 text-primary me-1" />
-            View Details
-          </Button> */}
-          <div className="mb-4 h4 card-title mt-5">Company List</div>
-          {adminRole == 'L3' && <ExportFileComponent url={'/api/admin/downloadAllCompaniesDateWise'} fileName={'AllCompanyList'} />}
-          <TableContainer
-            columns={columns}
-            // data={arr != undefined? arr : []}
-            data={companyList != undefined ? companyList : []}
-            isGlobalFilter={true}
-            isAddOptions={false}
-            customPageSize={20}
-          />
-        </CardBody>
-      </Card>}
-
+      <div className="page-content">
+        <Container fluid={true}>
+          <Breadcrumbs title="Company List" breadcrumbItem="Company List" />
+          <RegCompanyViewModal isOpen={modal1} toggle={toggleViewModal} />
+          {loading == false ? <Spinner /> : <Card>
+            <CardBody>
+              {adminRole == 'L3' && <ExportFileComponent url={'/api/admin/downloadAllCompaniesDateWise'} fileName={'AllCompanyList'} />}
+              <TableContainer
+                columns={columns}
+                // data={arr != undefined? arr : []}
+                data={companyList != undefined ? companyList : []}
+                isGlobalFilter={true}
+                isAddOptions={false}
+                customPageSize={20}
+              />
+            </CardBody>
+          </Card>}
+        </Container>
+      </div>
     </React.Fragment>
   );
 };

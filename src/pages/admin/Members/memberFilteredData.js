@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import withRouter from "components/Common/withRouter";
-import { Button, Card, CardBody, Row, Col } from "reactstrap";
+import { Button, Card, CardBody, Row, Col, Container } from "reactstrap";
 import { getMemberData as ongetMemberData } from "../../../store/actions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,7 +15,7 @@ import { selectComapnyStateMap, selectComapnyCityOpen, selectComapnyStateCityOpe
 
 import { MemberFilteredCityData } from "./memberFilterCityWaise";
 import { MemberStateCityData } from "./stateandcityModule";
-
+import Breadcrumbs from "../../../components/Common/Breadcrumb";
 
 import DatamapsIndia from 'react-datamaps-india'
 import Select from 'react-select';
@@ -176,29 +176,37 @@ const MemberFilteredData = props => {
 
   return (
     <React.Fragment>
-      {!stateOpen && <Card className=" mt-3">
-        <CardBody className=" mt-3">
-          <div className="mb-4 h5 mt-4 card-title ">Statewise Member Count</div>
-          <TableContainer
-            columns={columnsState}
-            // data={memberdata!= undefined && memberdata != [] ? memberdata:[]}
-            data={companyStateData.reverse()}
-            isGlobalFilter={true}
-            isAddOptions={false}
-            customPageSize={40}
-          />
-          <table>
-            <tr>
-              <th></th>
-            </tr>
-          </table>
-        </CardBody>
-      </Card>
-      }
+      <div className="page-content">
+        <Container fluid={true}>
+          <Breadcrumbs title="Statewise Member Count" breadcrumbItem="Statewise Member Count" />
+          {!stateOpen && <Card>
+            <CardBody>
+              <TableContainer
+                columns={columnsState}
+                // data={memberdata!= undefined && memberdata != [] ? memberdata:[]}
+                data={companyStateData.reverse()}
+                isGlobalFilter={true}
+                isAddOptions={false}
+                customPageSize={40}
+              />
+              <table>
+                <tr>
+                  <th></th>
+                </tr>
+              </table>
+            </CardBody>
+          </Card>
 
-      {cityData && isCityOpen && <MemberFilteredCityData cityData={cityData} selectedState={selectedState} setSelectedCity={setSelectedCity} setStateOpen={setStateOpen} />}
+          }
 
-      {isStateCityOpen && <MemberStateCityData selectedState={selectedState} selectedCity={selectedCity} />}
+          {cityData && isCityOpen && <MemberFilteredCityData cityData={cityData} selectedState={selectedState} setSelectedCity={setSelectedCity} setStateOpen={setStateOpen} />}
+
+          {isStateCityOpen && <MemberStateCityData selectedState={selectedState} selectedCity={selectedCity} />}
+        </Container>
+      </div>
+
+
+
     </React.Fragment>
   );
 };

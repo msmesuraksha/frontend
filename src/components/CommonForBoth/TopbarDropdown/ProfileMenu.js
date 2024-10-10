@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import withRouter from "components/Common/withRouter";
 
 // users
-import user1 from "../../../assets/images/users/avatar-1.jpg";
+import user1 from "../../../assets/images/users/user.png";
 
 const ProfileMenu = props => {
   function capitalizeWords(str) {
@@ -51,12 +51,13 @@ const ProfileMenu = props => {
           id="page-header-user-dropdown"
           tag="button"
         >
-
-          <div className="d-flex">
-            <i className='bx bxs-user-circle' style={{ fontSize: "35px", marginTop: '20px' }}></i>  &nbsp;
-            <span style={{ marginTop: '25px' }} >{JSON.parse(sessionStorage.getItem("authUser")).name}</span>&nbsp;
-            <i className="mdi mdi-chevron-down d-none d-xl-inline-block" style={{ fontSize: "15px", marginTop: '25px' }} />&nbsp;
-          </div>
+          <img
+            className="rounded-circle header-profile-user"
+            src={user1}
+            alt="Header Avatar"
+          />
+          <span className="d-none d-xl-inline-block ms-2 me-1">{username}</span>
+          <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">
           <DropdownItem tag="a" href="/profile">
@@ -64,17 +65,19 @@ const ProfileMenu = props => {
             <i className="bx bx-user font-size-16 align-middle me-1" />
             {props.t("Profile")}{" "}
           </DropdownItem>
-          {/* <DropdownItem tag="a" href="/crypto-wallet">
+          {/*     <DropdownItem tag="a" href="/crypto-wallet">
             <i className="bx bx-wallet font-size-16 align-middle me-1" />
             {props.t("My Wallet")}
           </DropdownItem> */}
-
-
-          <Link to="/Settings" className="dropdown-item">
+          {/*       <DropdownItem tag="a" href="#">
+            <span className="badge bg-success float-end">11</span>
             <i className="bx bx-wrench font-size-16 align-middle me-1" />
-            <span>{props.t("Setting")}</span>
-          </Link>
-
+            {props.t("Settings")}
+          </DropdownItem> */}
+          {/*           <DropdownItem tag="a" href="auth-lock-screen">
+            <i className="bx bx-lock-open font-size-16 align-middle me-1" />
+            {props.t("Lock screen")}
+          </DropdownItem> */}
           <div className="dropdown-divider" />
           <Link to="/logout" className="dropdown-item">
             <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger" />

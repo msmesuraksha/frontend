@@ -2,11 +2,12 @@ import React, { useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import withRouter from "components/Common/withRouter";
 import { isEmpty } from "lodash";
-import { Button, Card, CardBody, } from "reactstrap";
+import { Button, Card, CardBody, Container } from "reactstrap";
 import { MemberData } from "../../../../common/data/members";
 import { getMemberData as ongetMemberData } from "../../../../store/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
+import Breadcrumbs from "../../../../components/Common/Breadcrumb";
 // import _ from 'underscore'
 import Moment from 'react-moment';
 import * as moment from "moment";
@@ -230,20 +231,25 @@ const MembersList = props => {
     <React.Fragment>
       {inActivePop && <ConfirmInactiveModal isOpen={inActivePop} toggle={toggleInactiveModule} item={currentUserId} />}
       {modal1 && <MembersViewModal isOpen={modal1} toggle={toggleViewModal} data={selectedData} />}
-      <Card>
-        <CardBody>
-          <div className="mb-4 h4 card-title mt-5">Member List</div>
-          {adminRole == 'L3' && <ExportFileComponent url={'/api/admin/downloadAllUsers'} fileName={'AllMemberList'} />}
+      <div className="page-content">
+        <Container fluid={true}>
+          <Breadcrumbs title="Member List" breadcrumbItem="Member List" />
+          <Card>
+            <CardBody>
+              {adminRole == 'L3' && <ExportFileComponent url={'/api/admin/downloadAllUsers'} fileName={'AllMemberList'} />}
 
-          <TableContainer
-            columns={adminRole != 'L1' ? columns : columns.filter((value) => value.Header != 'Action')}
-            data={memberData != undefined && memberData != [] ? memberData : []}
-            isGlobalFilter={true}
-            isAddOptions={false}
-            customPageSize={20}
-          />
-        </CardBody>
-      </Card>
+              <TableContainer
+                columns={adminRole != 'L1' ? columns : columns.filter((value) => value.Header != 'Action')}
+                data={memberData != undefined && memberData != [] ? memberData : []}
+                isGlobalFilter={true}
+                isAddOptions={false}
+                customPageSize={20}
+              />
+            </CardBody>
+          </Card>
+        </Container>
+      </div>
+
       <ToastContainer />
     </React.Fragment>
   );

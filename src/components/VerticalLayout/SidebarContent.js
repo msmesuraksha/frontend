@@ -152,7 +152,7 @@ const SidebarContent = props => {
               <Link to="/dashboard">
                 <i className="bx bxs-dashboard"></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Dashboard")}
+                <span>{props.t("Dashboard")}</span>
               </Link>
             </li>
             <li>
@@ -160,7 +160,7 @@ const SidebarContent = props => {
                 {/*  <i className="bx bxs-dashboard"></i> */}
                 <i className='bx bx-notepad'></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Old Ticket")}
+                <span>{props.t("Old Ticket")}</span>
               </Link>
             </li>
             <li>
@@ -168,14 +168,14 @@ const SidebarContent = props => {
                 {/*  <i className="bx bxs-dashboard"></i> */}
                 <i className='bx bx-bar-chart-alt-2'></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Total Data")}
+                <span>{props.t("Total Data")}</span>
               </Link>
             </li>
             <li>
               <Link to="/Reopen-Requests">
                 <i className='bx bx-window-open' ></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Reopen Request's")}
+                <span>{props.t("Reopen Request's")}</span>
               </Link>
             </li>
             <li>
@@ -183,52 +183,50 @@ const SidebarContent = props => {
                 {/*  <i className="bx bxs-dashboard"></i> */}
                 <i className='bx bx-stats'></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Status / Opinion")}
+                <span>{props.t("Status / Opinion")}</span>
               </Link>
             </li>
             <li>
-              <Link to="" className={props.isHovered ? "has-arrow" : ""}>
+              <Link to="" className={"has-arrow"}>
                 <i className="bx bx-home-circle"></i>
-                <span>{props.isHovered && props.t("Members")}</span>
+                <span>{props.t("Members")}</span>
               </Link>
 
-              {props.isHovered && <ul className="sub-menu">
+              {<ul className="sub-menu">
 
                 <li>
                   <Link to="/members-list">
                     <i className="bx bx-user"></i>
                     {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                    {props.isHovered && props.t("Members")}
+                    <span>{props.t("Members")}</span>
                   </Link>
                 </li>
                 <li>
                   <Link to="/memberFilteredData">
                     <i className="bx bx-user-pin"></i>
                     {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                    {props.isHovered && props.t("Filtered Data")}
+                    <span>{props.t("Filtered Data")}</span>
                   </Link>
                 </li>
                 <li>
-
                   <Link to="/registered-company">
                     <i className="bx bx-check-double"></i>
                     {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                    {props.isHovered && props.t("Company")}
+                    <span>{props.t("Company")}</span>
                   </Link>
                 </li>
               </ul>}
-
             </li>
             <li>
               <Link to="/subscription" >
                 <i className="bx bx-crown"></i>
-                <span>{props.isHovered && props.t("Subscription")}</span>
+                <span>{props.t("Subscription")}</span>
               </Link>
             </li>
             <li>
               <Link to="/feedbackQuestion" >
                 <i className="bx bxs-report"></i>
-                <span>{props.isHovered && props.t("Feedback Question")}</span>
+                <span>{props.t("Feedback Question")}</span>
               </Link>
             </li>
             {/*       <li>
@@ -242,14 +240,14 @@ const SidebarContent = props => {
               <Link to="/approved-transaction" >
                 <i className="bx bx-transfer"></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Approved Transaction")}
+                <span>{props.t("Approved Transaction")}</span>
               </Link>
             </li>
             <li>
               <Link to="/request-deactivate" >
                 <i className="fa fa-bell"></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Request For Deactivation")}
+                <span>{props.t("Request For Deactivation")}</span>
               </Link>
             </li>
             {/*           <li>
@@ -265,7 +263,7 @@ const SidebarContent = props => {
               <Link to="/registration" >
                 <i className="bx bx-user-circle"></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Employee Registration")}
+                <span>{props.t("Employee Registration")}</span>
               </Link>
             </li>
             {/* <li>
@@ -914,7 +912,7 @@ const SidebarContent = props => {
               <Link to="/dashboard">
                 <i className="bx bxs-dashboard"></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Dashboard")}
+                <span>{props.t("Dashboard")}</span>
               </Link>
             </li>
             <li>
@@ -922,7 +920,7 @@ const SidebarContent = props => {
                 {/*  <i className="bx bxs-dashboard"></i> */}
                 <i className='bx bx-notepad'></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Old Ticket")}
+                <span>{props.t("Old Ticket")}</span>
               </Link>
             </li>
             <li>
@@ -930,29 +928,29 @@ const SidebarContent = props => {
                 {/*  <i className="bx bxs-dashboard"></i> */}
                 <i className='bx bx-stats'></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Status / Opinion")}
+                <span>{props.t("Status / Opinion")}</span>
               </Link>
             </li>
             <li>
-              <Link to="" className={props.isHovered ? "has-arrow" : ""}>
+              <Link to="" className={"has-arrow"}>
                 <i className="bx bx-home-circle"></i>
-                <span>{props.isHovered && props.t("Members")}</span>
+                <span>{props.t("Members")}</span>
               </Link>
 
-              {props.isHovered && <ul className="sub-menu">
+              {<ul className="sub-menu">
 
                 <li>
                   <Link to="/members-list">
                     <i className="bx bx-user"></i>
                     {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                    {props.isHovered && props.t("Members")}
+                    <span>{props.t("Members")}</span>
                   </Link>
                 </li>
                 <li>
                   <Link to="/memberFilteredData">
                     <i className="bx bx-user-pin"></i>
                     {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                    {props.isHovered && props.t("Filtered Data")}
+                    <span>{props.t("Filtered Data")}</span>
                   </Link>
                 </li>
                 <li>
@@ -960,7 +958,7 @@ const SidebarContent = props => {
                   <Link to="/registered-company">
                     <i className="bx bx-check-double"></i>
                     {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                    {props.isHovered && props.t("Company")}
+                    <span>{props.t("Company")}</span>
                   </Link>
                 </li>
               </ul>}
@@ -977,7 +975,7 @@ const SidebarContent = props => {
               <Link to="/approved-transaction" >
                 <i className="bx bx-transfer"></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Approved Transaction")}
+                <span>{props.t("Approved Transaction")}</span>
               </Link>
             </li>
             {/*   <li>
@@ -1000,7 +998,7 @@ const SidebarContent = props => {
               <Link to="/dashboard">
                 <i className="bx bxs-dashboard"></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Dashboard")}
+                <span>{props.t("Dashboard")}</span>
               </Link>
             </li>
             <li>
@@ -1008,14 +1006,14 @@ const SidebarContent = props => {
                 {/*  <i className="bx bxs-dashboard"></i> */}
                 <i className='bx bx-notepad'></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Old Ticket")}
+                <span>{props.t("Old Ticket")}</span>
               </Link>
             </li>
             <li>
               <Link to="/Reopen-Requests">
                 <i className='bx bx-window-open' ></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Reopen Request's")}
+                <span>{props.t("Reopen Request's")}</span>
               </Link>
             </li>
             <li>
@@ -1023,37 +1021,36 @@ const SidebarContent = props => {
                 {/*  <i className="bx bxs-dashboard"></i> */}
                 <i className='bx bx-stats'></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Status / Opinion")}
+                <span>{props.t("Status / Opinion")}</span>
               </Link>
             </li>
             <li>
-              <Link to="" className={props.isHovered ? "has-arrow" : ""}>
+              <Link to="" className={"has-arrow"}>
                 <i className="bx bx-home-circle"></i>
-                <span>{props.isHovered && props.t("Members")}</span>
+                <span>{props.t("Members")}</span>
               </Link>
 
-              {props.isHovered && <ul className="sub-menu">
+              {<ul className="sub-menu">
 
                 <li>
                   <Link to="/members-list">
                     <i className="bx bx-user"></i>
                     {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                    {props.isHovered && props.t("Members")}
+                    <span>{props.t("Members")}</span>
                   </Link>
                 </li>
                 <li>
                   <Link to="/memberFilteredData">
                     <i className="bx bx-user-pin"></i>
                     {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                    {props.isHovered && props.t("Filtered Data")}
+                    <span>{props.t("Filtered Data")}</span>
                   </Link>
                 </li>
                 <li>
-
                   <Link to="/registered-company">
                     <i className="bx bx-check-double"></i>
                     {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                    {props.isHovered && props.t("Company")}
+                    <span>{props.t("Company")}</span>
                   </Link>
                 </li>
               </ul>}
@@ -1070,7 +1067,7 @@ const SidebarContent = props => {
               <Link to="/approved-transaction" >
                 <i className="bx bx-transfer"></i>
                 {/* <span className="badge rounded-pill text-bg-success float-end" key="t-new">New</span> */}
-                {props.isHovered && props.t("Approved Transaction")}
+                <span>{props.t("Approved Transaction")}</span>
               </Link>
             </li>
             {/*             <li>

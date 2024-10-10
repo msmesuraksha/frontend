@@ -32,18 +32,17 @@ import { ExportFileComponent } from "pages/exportFile/exportFileComponent"
 
 import { Spinner } from "pages/admin/spinner/spinner"
 
+import Breadcrumbs from "../../components/Common/Breadcrumb";
+
 const LatestTranaction = props => {
 
   const [showReferModal, setShowReferModal] = useState(false)
-  const [showApproveModal, setShowApproveModal] = useState(false)
-  const [showInProcessModal, setShowInProcessModal] = useState(false)
   const [modal1, setModal1] = useState(false)
   const [selected, setSelected] = useState('')
 
   const selectLoading = useSelector(selectIsLoading)
-  const handleReferClick = () => {
-    setShowReferModal(true)
-  }
+
+
   const handleConfirmRefer = () => {
     if (selectedLevel) {
       // Handle refer logic here
@@ -64,18 +63,7 @@ const LatestTranaction = props => {
     }).format(value);
 
   const toggleViewModal = () => setModal1(!modal1)
-  const handleApproveClick = () => {
-    setShowApproveModal(true)
-  }
-  const handleInProcessClick = () => {
-    setShowInProcessModal(true)
-  }
-  const handleConfirmApprove = () => {
-    setShowApproveModal(false)
-  }
-  const handleConfirmInProcess = () => {
-    setShowInProcessModal(false)
-  }
+
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [selectedLevel, setSelectedLevel] = useState("")
   const toggleDropdown = () => {
@@ -337,43 +325,6 @@ const LatestTranaction = props => {
 
   return (
     <React.Fragment>
-      <InvoiceModal isOpen={modal1} toggle={toggleViewModal} selected={selected} />
-      {/* <ConfirmModal isOpen={isModalOpen} toggle={toggleModal} /> */}
-      <Modal isOpen={showReferModal} toggle={() => setShowReferModal(false)}>
-        <ModalHeader toggle={() => setShowReferModal(false)}>
-          Confirm Asclation
-        </ModalHeader>
-        <ModalBody>
-          {/* <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-            <DropdownToggle caret>
-            {selectedLevel ? selectedLevel : 'Select Level'} <span className="caret"></span>
-
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem onClick={() => setSelectedLevel('L1')}>L1</DropdownItem>
-              <DropdownItem onClick={() => setSelectedLevel('L2')}>L2</DropdownItem>
-              <DropdownItem onClick={() => setSelectedLevel('L3')}>L3</DropdownItem>
-            </DropdownMenu>
-          </Dropdown> */}
-          <p>
-            Asclation: Please select the level you want to refer this
-            transaction to.
-          </p>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="secondary" onClick={handleCancelRefer}>
-            Cancel
-          </Button>
-          <Button
-            color="danger"
-            onClick={handleConfirmRefer}
-            disabled={isReferDisabled}
-          >
-            Refer
-          </Button>
-        </ModalFooter>
-      </Modal>
-
       <Card>
         <CardBody>
           {props.isDisputedModal != true ? <div className="mb-4 h4 card-title">Latest Reported Transactions</div> : ""}
@@ -389,48 +340,9 @@ const LatestTranaction = props => {
           </p>
         </CardBody>
       </Card>
-      <Modal
-        isOpen={showApproveModal}
-        toggle={() => setShowApproveModal(false)}
-      >
-        <ModalHeader toggle={() => setShowApproveModal(false)}>
-          Confirm Approval
-        </ModalHeader>
-        <ModalBody>Are you sure you want to approve this bill?</ModalBody>
-        <ModalFooter>
-          <Button color="secondary" onClick={() => setShowApproveModal(false)}>
-            Cancel
-          </Button>
-          <Button color="success" onClick={handleConfirmApprove}>
-            Approve
-          </Button>
-        </ModalFooter>
-      </Modal>
-      <Modal
-        isOpen={showInProcessModal}
-        toggle={() => setShowInProcessModal(false)}
-      >
-        <ModalHeader toggle={() => setShowInProcessModal(false)}>
-          Confirm In Process
-        </ModalHeader>
-        <ModalBody>Are you sure you want to mark this as in process?</ModalBody>
-        <ModalFooter>
-          <Button
-            color="secondary"
-            onClick={() => setShowInProcessModal(false)}
-          >
-            Cancel
-          </Button>
-          <Button color="info" onClick={handleConfirmInProcess}>
-            In Process
-          </Button>
-        </ModalFooter>
-      </Modal>
     </React.Fragment>
   )
 }
-
-
 
 export const StatusAndOpinionObj = {
   APPROVED: 'COMPLAINT APPROVED',

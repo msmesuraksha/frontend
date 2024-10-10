@@ -41,6 +41,8 @@ import {
     Status
 } from "./ApprovedTransactionCol"; */
 
+import Breadcrumbs from "../../components/Common/Breadcrumb";
+
 import TableContainer from "components/Common/TableContainer";
 import ApprovedTranctionModel from "pages/admin/ApprovedTransaction/ApprovedTranModel";
 import { toast, ToastContainer } from "react-toastify";
@@ -185,23 +187,25 @@ export const RequestDeactivateModule = props => {
 
     return (
         <React.Fragment>
-            <div className="overflow-hidden mt-lg-4">..</div>
-            {modal1 && <RequestForDeactivateModule isOpen={modal1} toggle={toggleViewModal} selected={selectedData} />}
-            <Card>
-                <div className="overflow-hidden mt-lg-2">..</div>
-                {/* <h4 className="mb-sm-0 font-size-18 mr-4">Approved Transactions</h4> */}
-                <CardBody>
-                    <div className="mb-4 h4 card-title">Request For Deactivation</div>
-                    <TableContainer
-                        columns={columns}
-                        data={requestDeactivateData}
-                        isGlobalFilter={true}
-                        isAddOptions={false}
-                        customPageSize={20}
-                    />
-                </CardBody>
-            </Card>
-            <ToastContainer />
+            <div className="page-content">
+                <Container fluid={true}>
+                    <Breadcrumbs title="Request For Deactivation" breadcrumbItem="Request For Deactivation" />
+                    {modal1 && <RequestForDeactivateModule isOpen={modal1} toggle={toggleViewModal} selected={selectedData} />}
+                    <Card>
+                        {/* <h4 className="mb-sm-0 font-size-18 mr-4">Approved Transactions</h4> */}
+                        <CardBody>
+                            <TableContainer
+                                columns={columns}
+                                data={requestDeactivateData}
+                                isGlobalFilter={true}
+                                isAddOptions={false}
+                                customPageSize={20}
+                            />
+                        </CardBody>
+                    </Card>
+                    <ToastContainer />
+                </Container>
+            </div>
         </React.Fragment>
     );
 };

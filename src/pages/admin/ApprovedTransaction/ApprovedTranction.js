@@ -39,7 +39,6 @@ import {
   PaymentMethod,
   Status
 } from "./ApprovedTransactionCol";
-
 import TableContainer from "../../../components/Common/TableContainer";
 import ApprovedTranctionModel from "./ApprovedTranModel";
 import Breadcrumbs from "../../../components/Common/Breadcrumb";
@@ -335,56 +334,27 @@ const ApprovedTranction = props => {
 
   return (
     <React.Fragment>
-      <div className="overflow-hidden mt-lg-4">..</div>
+      <div className="page-content">
+        <Container fluid={true}>
+          <Breadcrumbs title="Approved Transactions" breadcrumbItem="Approved Transactions" />
+          <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} selected={selectedData} />
+          <Card>
+            <CardBody>
+              <TableContainer
+                columns={columns}
+                data={approvedTransactiondata}
+                isGlobalFilter={true}
+                isAddOptions={false}
+                customPageSize={20}
+              />
+              <p className="">Due Since : The number of due days is calculated from date of oldest invoice.
+              </p>
+            </CardBody>
+          </Card>
+        </Container>
+      </div>
 
-      <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} selected={selectedData} />
-      <Card>
-        <div className="overflow-hidden mt-lg-2">..</div>
-        {/* <h4 className="mb-sm-0 font-size-18 mr-4">Approved Transactions</h4> */}
-        <CardBody>
-          <div className="mb-4 h4 card-title">Approved Transactions</div>
-          <TableContainer
-            columns={columns}
-            data={approvedTransactiondata}
-            isGlobalFilter={true}
-            isAddOptions={false}
-            customPageSize={20}
-          />
-          <p className="">Due Since : The number of due days is calculated from date of oldest invoice.
-          </p>
-        </CardBody>
-      </Card>
-      <Modal isOpen={showReferModal} toggle={() => setShowReferModal(false)}>
-        <ModalHeader toggle={() => setShowReferModal(false)}>Confirm Refer to Senior</ModalHeader>
-        <ModalBody>
-          Are you sure you want to refer this project to a senior?
-        </ModalBody>
-        <ModalFooter>
-          <Button color="secondary" onClick={() => setShowReferModal(false)}>Cancel</Button>
-          <Button color="danger" onClick={handleConfirmRefer}>Refer</Button>
-        </ModalFooter>
-      </Modal>
-      <Modal isOpen={showApproveModal} toggle={() => setShowApproveModal(false)}>
-        <ModalHeader toggle={() => setShowApproveModal(false)}>Confirm Approval</ModalHeader>
-        <ModalBody>
-          Are you sure you want to approve this transaction?
-        </ModalBody>
-        <ModalFooter>
-          <Button color="secondary" onClick={() => setShowApproveModal(false)}>Cancel</Button>
-          <Button color="success" onClick={handleConfirmApprove}>Approve</Button>
-        </ModalFooter>
-      </Modal>
-      <Modal isOpen={showInProcessModal} toggle={() => setShowInProcessModal(false)}>
-        <ModalHeader toggle={() => setShowInProcessModal(false)}>Confirm In Process</ModalHeader>
-        <ModalBody>
-          Are you sure you want to mark this as decline ?
-        </ModalBody>
-        <ModalFooter>
-          <Button color="secondary" onClick={() => setShowInProcessModal(false)}>Cancel</Button>
-          <Button color="danger" onClick={handleConfirmInProcess}>Decline</Button>
 
-        </ModalFooter>
-      </Modal>
     </React.Fragment>
   );
 };
