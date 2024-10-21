@@ -70,7 +70,7 @@ function LatesttransactionViewDetails(props) {
     const colourStyles = {
         control: (provided, state) => ({
             ...provided,
-            width: 370, // Set your custom width here, in pixels or any valid CSS value
+            /* width: 370, */ // Set your custom width here, in pixels or any valid CSS value
         }),
         menuList: styles => ({
             ...styles,
@@ -1178,7 +1178,7 @@ function LatesttransactionViewDetails(props) {
                 {SelectedTab != 'closeTicket' && selected.defaulterEntry.latestStatus != 'COMPLAINT_DELETED' && <Row className="mt-4">
                     <Row md="4" className="mt-3" ><h3>Action</h3></Row>
                     <Row className="mt-3">
-                        <Col xl="3" className="mb-3">
+                        <Col md="4" xs={12} className="mb-3">
                             <label className="visually-hidden" htmlFor="autoSizingSelect">Preference</label>
                             <Select
                                 options={options}
