@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import PropTypes from "prop-types";
+import React, { Fragment } from "react"
+import PropTypes from "prop-types"
 import {
   useTable,
   useGlobalFilter,
@@ -8,52 +8,58 @@ import {
   useFilters,
   useExpanded,
   usePagination,
-} from "react-table";
-import { Table, Row, Col, Button, Input, CardBody } from "reactstrap";
-import { Filter, DefaultColumnFilter } from "./filters";
-import JobListGlobalFilter from "../../components/Common/GlobalSearchFilter";
+} from "react-table"
+import { Table, Row, Col, Button, Input, CardBody } from "reactstrap"
+import { Filter, DefaultColumnFilter } from "./filters"
+import JobListGlobalFilter from "../../components/Common/GlobalSearchFilter"
 import "./Tablestyle.css"
+import { ExportFileComponent } from "pages/exportFile/exportFileComponent"
 // Define a default UI for filtering
+
 function GlobalFilter({
   preGlobalFilteredRows,
   globalFilter,
   setGlobalFilter,
-  isJobListGlobalFilter
+  isJobListGlobalFilter,
 }) {
-  const count = preGlobalFilteredRows.length;
-  const [value, setValue] = React.useState(globalFilter);
+  const count = preGlobalFilteredRows.length
+  const [value, setValue] = React.useState(globalFilter)
   const onChange = useAsyncDebounce(value => {
-    setGlobalFilter(value || undefined);
-  }, 200);
+    setGlobalFilter(value || undefined)
+  }, 200)
 
   return (
-
-    <div className="search-box me-2">
-      <div className="position-relative">
-        <label htmlFor="search-bar-0" className="search-label">
-          <span id="search-bar-0-label" className="sr-only">
-            Search this table
-          </span>
-          <input
-            onChange={e => {
-              setValue(e.target.value);
-              onChange(e.target.value);
-            }}
-            id="search-bar-0"
-            type="text"
-            className="form-control"
-            placeholder={`Search Here...`}
-            value={value || ""}
-          />
-        </label>
-        <i className="bx bx-search-alt search-icon"></i>
-      </div>
-    </div>
-
-  );
+    <React.Fragment>
+      <Col md={8}>
+        <div className="search-box me-xxl-2  my-xxl-0 d-inline-block">
+          <div className="position-relative">
+            <label htmlFor="search-bar-0" className="search-label">
+              <span id="search-bar-0-label" className="sr-only">
+                Search this table
+              </span>
+              <input
+                onChange={e => {
+                  setValue(e.target.value)
+                  onChange(e.target.value)
+                }}
+                id="search-bar-0"
+                type="text"
+                className="form-control"
+                placeholder={`Search here...`}
+                value={value || ""}
+              />
+            </label>
+            <i className="bx bx-search-alt search-icon"></i>
+          </div>
+        </div>
+      </Col>
+      {isJobListGlobalFilter && <JobListGlobalFilter />}
+    </React.Fragment>
+  )
 }
 
-const TableContainer = ({ columns,
+const TableContainer = ({
+  columns,
   data,
   isGlobalFilter,
   isJobListGlobalFilter,
@@ -65,7 +71,11 @@ const TableContainer = ({ columns,
   isAddCustList,
   customPageSize,
   className,
-  customPageSizeOptions, }) => {
+  customPageSizeOptions,
+  ExportFile,
+  url,
+  fileName,
+}) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -83,45 +93,47 @@ const TableContainer = ({ columns,
     state,
     preGlobalFilteredRows,
     setGlobalFilter,
-    state: { pageIndex, pageSize }, } = useTable(
-      {
-        columns,
-        data,
-        defaultColumn: { Filter: DefaultColumnFilter },
-        initialState: {
-          pageIndex: 0,
-          pageSize: customPageSize != undefined ? customPageSize : 5,
-          sortBy: [
-            {
-              desc: true,
-            },
-          ],
-        },
+    state: { pageIndex, pageSize },
+  } = useTable(
+    {
+      columns,
+      data,
+      defaultColumn: { Filter: DefaultColumnFilter },
+      initialState: {
+        pageIndex: 0,
+        pageSize: customPageSize != undefined ? customPageSize : 5,
+        sortBy: [
+          {
+            desc: true,
+          },
+        ],
       },
-      useGlobalFilter,
-      useFilters,
-      useSortBy,
-      useExpanded,
-      usePagination
-    );
+    },
+    useGlobalFilter,
+    useFilters,
+    useSortBy,
+    useExpanded,
+    usePagination
+  )
 
+  const adminRole = sessionStorage.getItem("adminRole")
 
   const generateSortingIndicator = column => {
-    return column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : "";
-  };
+    return column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""
+  }
 
   const onChangeInSelect = event => {
-    setPageSize(Number(event.target.value));
-  };
+    setPageSize(Number(event.target.value))
+  }
 
   const onChangeInInput = event => {
-    const page = event.target.value ? Number(event.target.value) - 1 : 0;
-    gotoPage(page);
-  };
+    const page = event.target.value ? Number(event.target.value) - 1 : 0
+    gotoPage(page)
+  }
   return (
     <Fragment>
       <Row className="mb-8 justify-content-start">
-        <Col md={2}>
+        <Col sm="12" md={2} className="mb-2">
           <select
             className="form-select"
             value={pageSize}
@@ -135,7 +147,7 @@ const TableContainer = ({ columns,
           </select>
         </Col>
 
-        <Col md={6} className="d-flex align-items-center">
+        <Col sm="12" md={4} className="mb-2">
           {isGlobalFilter && (
             <GlobalFilter
               preGlobalFilteredRows={preGlobalFilteredRows}
@@ -144,25 +156,17 @@ const TableContainer = ({ columns,
               isJobListGlobalFilter={isJobListGlobalFilter}
             />
           )}
-          <style>
-          </style>
+          <style></style>
         </Col>
-        {/* {isAddOptions && (
-          <Col sm="7">
-            <div className="text-sm-end">
-              <Button
-                type="button"
-                color="success"
-                className="btn-rounded  mb-2 me-2"
-                onClick={handleOrderClicks}
-              >
-                <i className="mdi mdi-plus me-1" />
-                Add New Order
-              </Button>
-            </div>
+
+        {ExportFile && adminRole == "L3" && (
+          <Col sm="12" md={6} className="mb-2">
+            {/* <div className="text-sm-end"> */}
+              <ExportFileComponent url={url} fileName={fileName} />
+           {/*  </div> */}
           </Col>
         )}
-        {isAddUserList && (
+        {/*    {isAddUserList && (
           <Col sm="7">
             <div className="text-sm-end">
               <Button
@@ -195,9 +199,8 @@ const TableContainer = ({ columns,
       </Row>
 
       <div className="table-responsive react-table ">
-
-        <Table bordered hover {...getTableProps()} >
-          <thead className="table-light table-nowrap " >
+        <Table bordered hover {...getTableProps()}>
+          <thead className="table-light table-nowrap ">
             {headerGroups.map(headerGroup => (
               <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map(column => (
@@ -215,19 +218,18 @@ const TableContainer = ({ columns,
 
           <tbody {...getTableBodyProps()} className="">
             {page.map(row => {
-              prepareRow(row);
+              prepareRow(row)
               return (
-
                 <tr key={row.getRowProps().key}>
                   {row.cells.map(cell => {
                     return (
-                      <td key={cell.id} {...cell.getCellProps()} >
+                      <td key={cell.id} {...cell.getCellProps()}>
                         {cell.render("Cell")}
                       </td>
-                    );
+                    )
                   })}
                 </tr>
-              );
+              )
             })}
           </tbody>
         </Table>
@@ -255,7 +257,8 @@ const TableContainer = ({ columns,
         <Col className="col-md-auto d-none d-md-block">
           Page{" "}
           <strong>
-            {pageIndex + 1} of {pageOptions.length != 0 ? pageOptions.length : '1'}
+            {pageIndex + 1} of{" "}
+            {pageOptions.length != 0 ? pageOptions.length : "1"}
           </strong>
         </Col>
         <Col className="col-md-auto">
@@ -285,11 +288,11 @@ const TableContainer = ({ columns,
         </Col>
       </Row>
     </Fragment>
-  );
-};
+  )
+}
 
 TableContainer.propTypes = {
   preGlobalFilteredRows: PropTypes.any,
-};
+}
 
-export default TableContainer;
+export default TableContainer

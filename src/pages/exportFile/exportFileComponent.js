@@ -57,26 +57,12 @@ export const ExportFileComponent = ({ url, fileName }) => {
     };
 
     return (
-        <Row className="selectionListss">
-            <Col md={2}>
+        <Row className="selectionListss justify-content-end">
 
-            </Col>
-            <Col md={2}>
 
-            </Col>
-            <Col md={1}>
-
-            </Col>
-            {selectMonth != 'CUSTOM' && <Col md={3}>
-            </Col>}
-            <Col md={2}>
+            <Col md={ selectMonth == 'CUSTOM' ? "4" : "4"} sm="12" className="mb-2 ">
                 <div className="d-inline">
-                    <label
-                        className="visually-hidden custom-content"
-                        htmlFor="customerSelect"
-                    >
-                        Select Customer
-                    </label>
+                  
                     <Select
                         id="primaryContact"
                         className="custom-content"
@@ -88,8 +74,8 @@ export const ExportFileComponent = ({ url, fileName }) => {
                 </div>
             </Col>
             {selectMonth == 'CUSTOM' &&
-                <Col md={3}>
-                    <FormGroup className="mb-4">
+                <Col md={4} sm="12" className="mb-2">
+                    <FormGroup className="mb-2">
 
                         <InputGroup>
                             <Flatpickr
@@ -105,7 +91,7 @@ export const ExportFileComponent = ({ url, fileName }) => {
                     </FormGroup>
 
                 </Col>}
-            <Col>
+            <Col md={ selectMonth == 'CUSTOM' ? "4" : "4"} sm="12" className="mb-2">
                 <ExportFileApi selectMonth={selectMonth} dateSelect={dateSelect} url={url} fileName={fileName} />
             </Col>
 
