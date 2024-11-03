@@ -164,7 +164,7 @@ const CreatePlanModel = props => {
                     <form>
                         <Row className="mt-3">
                             <Col md={2} className="pt-2">
-                                <Label className="form-label"><b className="h5">Plan Name</b></Label>
+                                <Label className="form-label "><b className="h5">Plan Name</b></Label>
                             </Col>
                             <Col md={6}>
                                 <Input
