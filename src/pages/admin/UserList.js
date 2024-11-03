@@ -205,17 +205,14 @@ const UserList = props => {
         {isDeleteModalOpen && <DeleteModal isOpen={isDeleteModalOpen} toggle={toggleDeleteModal} deletedId={deletedId} />}
         <Card>
           <CardBody>
-            {adminRole != 'L1' && <div className="d-flex justify-content-end align-items-center mb-3">
-              <Button type="button" color="primary" className="btn-sm btn-rounded" onClick={toggleAdminModal}>
-                Add A Employee
-              </Button>
-            </div>}
             <TableContainer
               columns={adminRole == 'L1' ? columns.filter((value) => value.Header != 'Action') : columns}
               data={adminData != undefined && adminData.data != undefined ? adminData.data.data.response : []}
               isGlobalFilter={true}
               isAddOptions={false}
               customPageSize={20}
+              isAddEmployee={true}
+              toggleAdminModal={toggleAdminModal}
             />
           </CardBody>
         </Card>

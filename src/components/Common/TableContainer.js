@@ -75,6 +75,8 @@ const TableContainer = ({
   ExportFile,
   url,
   fileName,
+  isAddEmployee,
+  toggleAdminModal,
 }) => {
   const {
     getTableProps,
@@ -160,10 +162,25 @@ const TableContainer = ({
         </Col>
 
         {ExportFile && adminRole == "L3" && (
-          <Col sm="12" md={6} className="mb-2" >
+          <Col sm="12" md={6} className="mb-2">
             {/* <div className="text-sm-end"> */}
-              <ExportFileComponent url={url} fileName={fileName} />
-           {/*  </div> */}
+            <ExportFileComponent url={url} fileName={fileName} />
+            {/*  </div> */}
+          </Col>
+        )}
+        {isAddEmployee && adminRole != "L1" && (
+          <Col sm="12" md={6} className="mb-2">
+            <div className="text-sm-end">
+              <Button
+                type="button"
+                color="primary"
+                className="btn-rounded  mb-2 me-2"
+                onClick={() => toggleAdminModal()}
+              >
+                <i className="mdi mdi-plus me-1" />
+                Add A Employee
+              </Button>
+            </div>
           </Col>
         )}
         {/*    {isAddUserList && (

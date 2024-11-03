@@ -196,7 +196,6 @@ const RegisteredCompanyList = props => {
           <RegCompanyViewModal isOpen={modal1} toggle={toggleViewModal} />
           {loading == false ? <Spinner /> : <Card>
             <CardBody>
-              {adminRole == 'L3' && <ExportFileComponent url={'/api/admin/downloadAllCompaniesDateWise'} fileName={'AllCompanyList'} />}
               <TableContainer
                 columns={columns}
                 // data={arr != undefined? arr : []}
@@ -204,6 +203,9 @@ const RegisteredCompanyList = props => {
                 isGlobalFilter={true}
                 isAddOptions={false}
                 customPageSize={20}
+                ExportFile={true}
+              url = {"/api/admin/downloadAllCompaniesDateWise"}
+              fileName={"AllCompanyList"}
               />
             </CardBody>
           </Card>}

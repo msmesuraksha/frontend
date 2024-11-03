@@ -159,7 +159,7 @@ const CreatePlanModel = props => {
         >
             <div className="modal-content">
                 <ModalHeader toggle={toggle}>Create A Plan</ModalHeader>
-                <ModalBody style={{ padding: '5px 80px' }}>
+                <ModalBody >
 
                     <form>
                         <Row className="mt-3">
