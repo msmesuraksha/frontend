@@ -160,7 +160,7 @@ const TableContainer = ({
         </Col>
 
         {ExportFile && adminRole == "L3" && (
-          <Col sm="12" md={6} className="mb-2">
+          <Col sm="12" md={6} className="mb-2" >
             {/* <div className="text-sm-end"> */}
               <ExportFileComponent url={url} fileName={fileName} />
            {/*  </div> */}
